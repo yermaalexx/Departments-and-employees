@@ -1,14 +1,9 @@
 package employeesdepartments.entities;
 
-import employeesdepartments.models.EmployeeDTO;
-import employeesdepartments.models.EmployeeListDTO;
-import employeesdepartments.repositories.EmployeeRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-
 import javax.persistence.*;
 
 @Entity
-@Table(name = "departments")
+@Table(schema = "public", name = "departments")
 public class DepartmentEntity {
     @Id
     @GeneratedValue

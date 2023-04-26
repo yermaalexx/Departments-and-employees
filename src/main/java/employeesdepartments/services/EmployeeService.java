@@ -46,7 +46,7 @@ public class EmployeeService {
             employeeEntity.setBirthDate(employeeDTO.getBirthDate());
         if(employeeDTO.getEmploymentDate()!=null)
             employeeEntity.setEmploymentDate(employeeDTO.getEmploymentDate());
-        if(employeeDTO.getIdOfDepartment()!=null)
+        if(employeeDTO.getIdOfDepartment()!=null && departmentRepository.existsById(employeeDTO.getIdOfDepartment()))
             employeeEntity.setIdOfDepartment(employeeDTO.getIdOfDepartment());
         if(employeeDTO.getJobTitle()!=null)
             employeeEntity.setJobTitle(employeeDTO.getJobTitle());
@@ -71,8 +71,10 @@ public class EmployeeService {
     public EmployeeDTO editDepartmentOfEmployee(Integer employeeID, Integer departmentID) {
         if(employeeID==null || !employeeRepository.existsById(employeeID))
             throw new NoEmployeeWithThisIDException();
-        if(departmentID==null || !departmentRepository.existsById(departmentID))
+        if(departmentID!=-1 && (departmentID==null || !departmentRepository.existsById(departmentID)))
             throw new NoDepartmentWithThisIDException();
+        if(departmentID==-1)
+            departmentID=null;
         EmployeeEntity employeeEntity = employeeRepository.findById(employeeID).get();
         employeeEntity.setIdOfDepartment(departmentID);
         employeeRepository.save(employeeEntity);

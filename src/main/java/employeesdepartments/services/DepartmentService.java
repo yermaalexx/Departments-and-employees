@@ -95,7 +95,8 @@ public class DepartmentService {
             throw new NoDepartmentWithThisIDException();
         List<EmployeeDTO> listEmployeeDTO = new ArrayList<>();
         employeeRepository.findAll().forEach(employeeEntity -> {
-            if(employeeEntity.getIdOfDepartment().equals(departmentID))
+            if(employeeEntity.getIdOfDepartment()!=null &&
+                    employeeEntity.getIdOfDepartment().equals(departmentID))
                 listEmployeeDTO.add(modelMapper.map(employeeEntity, EmployeeDTO.class));
         });
         EmployeeListDTO employeeListDTO = new EmployeeListDTO();
