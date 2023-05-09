@@ -45,7 +45,7 @@ Status: 406 NOT ACCEPTABLE,  Response body: `{"violations": [{"fieldName": "addE
 - #### Edit employee
 ##### Request: `PUT /employees`
 
-Edit an existing employee, Request body with ID of employee required, birthDate must be over 18 years ago, idOfDepartment must match the existing department (otherwise it will be setted to null)
+Edit an existing employee, Request body with ID of employee required, birthDate must be over 18 years ago, idOfDepartment must match the existing department (otherwise idOfDepartment will not be changed)
 
 Request body:
 `{"id": 7, "name": "Musk Ilon", "birthDate": "1999-03-17", "employmentDate": "2020-04-15", "idOfDepartment": 2, "jobTitle": "Manager"}`
