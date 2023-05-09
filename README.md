@@ -38,9 +38,9 @@ Request body:
 
 ##### Response: 
 
-Status is 200 OK,    Response body: `{"id": 7, "name": "Musk Ilon", "birthDate": "1999-03-17", "employmentDate": "2020-04-15", "idOfDepartment": 2, "jobTitle": "Manager"}`
+Status: 201 CREATED,    Response body: `{"id": 7, "name": "Musk Ilon", "birthDate": "1999-03-17", "employmentDate": "2020-04-15", "idOfDepartment": 2, "jobTitle": "Manager"}`
 
-Status is 400 Bad Request,  Response body: `{"violations": [{"fieldName": "addEmployee.employeeDTO.name", "message": "Name of employee must not be empty."}, {"fieldName": "addEmployee.employeeDTO.birthDate", "message": "Employee must be over minimum age."}]}`
+Status: 406 NOT ACCEPTABLE,  Response body: `{"violations": [{"fieldName": "addEmployee.employeeDTO.name", "message": "Name of employee must not be empty."}, {"fieldName": "addEmployee.employeeDTO.birthDate", "message": "Employee must be over minimum age."}]}`
 ******
 - #### Edit employee
 ##### Request: `PUT /employees`
@@ -52,9 +52,9 @@ Request body:
 
 ##### Response: 
 
-Status is 200 OK,    Response body: `{"id": 7, "name": "Musk Ilon", "birthDate": "1999-03-17", "employmentDate": "2020-04-15", "idOfDepartment": 2, "jobTitle": "Manager"}`
+Status: 202 ACCEPTED,    Response body: `{"id": 7, "name": "Musk Ilon", "birthDate": "1999-03-17", "employmentDate": "2020-04-15", "idOfDepartment": 2, "jobTitle": "Manager"}`
 
-Status is 400 Bad Request,  Response body: `{"message": "No employee with this ID."}`
+Status: 404 NOT FOUND,  Response body: `{"message": "No employee with this ID."}`
 ******
 - #### Set new ID of department for the employee
 ##### Request: `PATCH /employees/{employeeId}/{newDepartmentId}`
@@ -63,9 +63,11 @@ Set new idOfDepartment for existing employee, ID's of employee and department in
 
 ##### Response:
 
-Status is 200 OK,    Response body: `{"id": 7, "name": "Musk Ilon", "birthDate": "1999-03-17", "employmentDate": "2020-04-15", "idOfDepartment": 2, "jobTitle": "Manager"}`
+Status: 202 ACCEPTED,    Response body: `{"id": 7, "name": "Musk Ilon", "birthDate": "1999-03-17", "employmentDate": "2020-04-15", "idOfDepartment": 2, "jobTitle": "Manager"}`
 
-Status is 400 Bad Request,  Response body: `{"message": "No employee with this ID."}`
+Status: 404 NOT FOUND,  Response body: `{"message": "No employee with this ID."}`
+
+Status: 404 NOT FOUND,  Response body: `{"message": "No department with this ID."}`
 ******
 - #### Delete employee
 ##### Request: `DELETE /employees/{employeeId}`
@@ -74,9 +76,9 @@ Delete an existing employee, ID of employee in path required
 
 ##### Response:
 
-Status is 200 OK
+Status: 204 NO CONTENT
 
-Status is 400 Bad Request,  Response body: `{"message": "No employee with this ID."}`
+Status: 404 NOT FOUND,  Response body: `{"message": "No employee with this ID."}`
 ******
 - #### Get employee
 ##### Request: `GET /employees/{employeeId}`
@@ -85,9 +87,9 @@ Get an existing employee, ID of employee in path required
 
 ##### Response:
 
-Status is 200 OK,    Response body: `{"id": 7, "name": "Musk Ilon", "birthDate": "1999-03-17", "employmentDate": "2020-04-15", "idOfDepartment": 2, "jobTitle": "Manager"}`
+Status: 200 OK,    Response body: `{"id": 7, "name": "Musk Ilon", "birthDate": "1999-03-17", "employmentDate": "2020-04-15", "idOfDepartment": 2, "jobTitle": "Manager"}`
 
-Status is 400 Bad Request,  Response body: `{"message": "No employee with this ID."}`
+Status: 404 NOT FOUND,  Response body: `{"message": "No employee with this ID."}`
 ******
 - #### Get all employees
 ##### Request: `GET /employees/all`
@@ -96,9 +98,8 @@ Get list of all employees
 
 ##### Response:
 
-Status is 200 OK,    Response body: `[{"id": 7, "name": "Musk Ilon", "birthDate": "1999-03-17", "employmentDate": "2020-04-15", "idOfDepartment": 2, "jobTitle": "Manager"}]`
+Status: 200 OK,    Response body: `[{"id": 7, "name": "Musk Ilon", "birthDate": "1999-03-17", "employmentDate": "2020-04-15", "idOfDepartment": 2, "jobTitle": "Manager"}]`
 
-Status is 400 Bad Request
 ******
 ******
 - #### Add department
@@ -111,9 +112,9 @@ Request body:
 
 ##### Response:
 
-Status is 200 OK,    Response body: `{"id": 2, "name": "Development department", "description": "Department is responsible for the acquisition of funds", "additionalInformation": "Location: NYC"}`
+Status: 201 CREATED,    Response body: `{"id": 2, "name": "Development department", "description": "Department is responsible for the acquisition of funds", "additionalInformation": "Location: NYC"}`
 
-Status is 400 Bad Request,  Response body: `{"violations": [{"fieldName": "addDepartment.departmentDTO.name", "message": "Name of department must not be empty."}]}`
+Status: 406 NOT ACCEPTABLE,  Response body: `{"violations": [{"fieldName": "addDepartment.departmentDTO.name", "message": "Name of department must not be empty."}]}`
 ******
 - #### Edit department
 ##### Request: `PUT /departments`
@@ -125,9 +126,9 @@ Request body:
 
 ##### Response:
 
-Status is 200 OK,    Response body: `{"id": 2, "name": "Development department", "description": "Department is responsible for the acquisition of funds", "additionalInformation": "Location: NYC"}`
+Status: 202 ACCEPTED,    Response body: `{"id": 2, "name": "Development department", "description": "Department is responsible for the acquisition of funds", "additionalInformation": "Location: NYC"}`
 
-Status is 400 Bad Request,  Response body: `{"message": "No department with this ID."}`
+Status: 404 NOT FOUND,  Response body: `{"message": "No department with this ID."}`
 ******
 - #### Delete department
 ##### Request: `DELETE /departments/{departmentId}`
@@ -136,9 +137,9 @@ Delete an existing department, ID of department in path required
 
 ##### Response:
 
-Status is 200 OK
+Status: 204 NO CONTENT
 
-Status is 400 Bad Request,  Response body: `{"message": "No department with this ID."}`
+Status: 404 NOT FOUND,  Response body: `{"message": "No department with this ID."}`
 ******
 - #### Get department
 ##### Request: `GET /departments/{departmentId}`
@@ -147,9 +148,9 @@ Get an existing department with its list of employees, ID of department in path 
 
 ##### Response:
 
-Status is 200 OK,    Response body: `{"id": 2, "name": "Development department", "description": "Department is responsible for the acquisition of funds", "additionalInformation": "Location: NYC", "listOfEmployees": [{"id": 7, "name": "Musk Ilon", "birthDate": "1999-03-17", "employmentDate": "2020-04-15", "idOfDepartment": 2, "jobTitle": "Manager"}]}`
+Status: 200 OK,    Response body: `{"id": 2, "name": "Development department", "description": "Department is responsible for the acquisition of funds", "additionalInformation": "Location: NYC", "listOfEmployees": [{"id": 7, "name": "Musk Ilon", "birthDate": "1999-03-17", "employmentDate": "2020-04-15", "idOfDepartment": 2, "jobTitle": "Manager"}]}`
 
-Status is 400 Bad Request,  Response body: `{"message": "No department with this ID."}`
+Status: 404 NOT FOUND,  Response body: `{"message": "No department with this ID."}`
 ******
 - #### Get list of employees
 ##### Request: `GET /departments/{departmentId}/list`
@@ -158,9 +159,9 @@ Get list of employees in this department, ID of department in path required
 
 ##### Response:
 
-Status is 200 OK,    Response body: `[{"id": 7, "name": "Musk Ilon", "birthDate": "1999-03-17", "employmentDate": "2020-04-15", "idOfDepartment": 2, "jobTitle": "Manager"}]`
+Status: 200 OK,    Response body: `[{"id": 7, "name": "Musk Ilon", "birthDate": "1999-03-17", "employmentDate": "2020-04-15", "idOfDepartment": 2, "jobTitle": "Manager"}]`
 
-Status is 400 Bad Request,  Response body: `{"message": "No department with this ID."}`
+Status: 404 NOT FOUND,  Response body: `{"message": "No department with this ID."}`
 ******
 - #### Get all departments
 ##### Request: `GET /departments/all`
@@ -169,9 +170,8 @@ Get all departments with their lists of employees
 
 ##### Response:
 
-Status is 200 OK,    Response body: `[{"id": 2, "name": "Development department", "description": "Department is responsible for the acquisition of funds", "additionalInformation": "Location: NYC", "listOfEmployees": [{"id": 7, "name": "Musk Ilon", "birthDate": "1999-03-17", "employmentDate": "2020-04-15", "idOfDepartment": 2, "jobTitle": "Manager"}]}]`
+Status: 200 OK,    Response body: `[{"id": 2, "name": "Development department", "description": "Department is responsible for the acquisition of funds", "additionalInformation": "Location: NYC", "listOfEmployees": [{"id": 7, "name": "Musk Ilon", "birthDate": "1999-03-17", "employmentDate": "2020-04-15", "idOfDepartment": 2, "jobTitle": "Manager"}]}]`
 
-Status is 400 Bad Request
 ******
 
 

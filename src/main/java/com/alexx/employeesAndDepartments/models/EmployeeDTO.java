@@ -7,6 +7,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 @Schema(description = "Employee description")
 public class EmployeeDTO {
@@ -36,6 +37,15 @@ public class EmployeeDTO {
 
   public EmployeeDTO(String name) {
     this.name = name;
+  }
+
+  public EmployeeDTO(Integer id, String name, LocalDate birthDate, LocalDate employmentDate, Integer idOfDepartment, String jobTitle) {
+    this.id = id;
+    this.name = name;
+    this.birthDate = birthDate;
+    this.employmentDate = employmentDate;
+    this.idOfDepartment = idOfDepartment;
+    this.jobTitle = jobTitle;
   }
 
   public Integer getId() {
@@ -84,6 +94,18 @@ public class EmployeeDTO {
 
   public void setJobTitle(String jobTitle) {
     this.jobTitle = jobTitle;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (!(o instanceof EmployeeDTO that)) return false;
+    return Objects.equals(getId(), that.getId()) && getName().equals(that.getName()) && Objects.equals(getBirthDate(), that.getBirthDate()) && Objects.equals(getEmploymentDate(), that.getEmploymentDate()) && Objects.equals(getIdOfDepartment(), that.getIdOfDepartment()) && Objects.equals(getJobTitle(), that.getJobTitle());
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(getId(), getName(), getBirthDate(), getEmploymentDate(), getIdOfDepartment(), getJobTitle());
   }
 }
 

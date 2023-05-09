@@ -6,6 +6,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.constraints.Min;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,14 +26,14 @@ public class EmployeeController {
     @Operation(summary = "Add employee", description = "Add new employee, Request body with name of employee required, " +
             "ID is generated automatically, birthDate must be over 18 years ago, idOfDepartment must match the existing department")
     public ResponseEntity<EmployeeDTO> addEmployee(@RequestBody EmployeeDTO employeeDTO) {
-        return ResponseEntity.ok(employeeService.addEmployee(employeeDTO));
+        return ResponseEntity.status(HttpStatus.CREATED).body(employeeService.addEmployee(employeeDTO));
     }
 
     @PutMapping("/employees")
     @Operation(summary = "Edit employee", description = "Edit an existing employee, Request body with ID of employee required, " +
             "birthDate must be over 18 years ago, idOfDepartment must match the existing department")
     public ResponseEntity<EmployeeDTO> editEmployee(@RequestBody EmployeeDTO employeeDTO) {
-        return ResponseEntity.ok(employeeService.editEmployee(employeeDTO));
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(employeeService.editEmployee(employeeDTO));
     }
 
     @DeleteMapping("/employees/{employeeId}")
@@ -42,7 +43,7 @@ public class EmployeeController {
                                                    @Parameter(description = "ID of the existing employee to remove")
                                                    Integer id) {
         employeeService.deleteEmployee(id);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
     @GetMapping("/employees/{employeeId}")
@@ -66,7 +67,7 @@ public class EmployeeController {
             @Min(value = -1, message = "ID of department must be positive, or -1 to make it null.")
             @Parameter(description = "New ID of department, -1 to set null")
             Integer departmentID) {
-        return ResponseEntity.ok(employeeService.editDepartmentOfEmployee(employeeID, departmentID));
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(employeeService.editDepartmentOfEmployee(employeeID, departmentID));
     }
 
     @GetMapping("/employees/all")

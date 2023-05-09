@@ -2,6 +2,8 @@ package com.alexx.employeesAndDepartments.entities;
 
 import jakarta.persistence.*;
 
+import java.util.Objects;
+
 @Entity
 @Table(schema = "public", name = "departments")
 public class DepartmentEntity {
@@ -49,5 +51,27 @@ public class DepartmentEntity {
 
     public void setAdditionalInformation(String additionalInformation) {
         this.additionalInformation = additionalInformation;
+    }
+
+    public DepartmentEntity() {
+    }
+
+    public DepartmentEntity(Integer id, String name, String description, String additionalInformation) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.additionalInformation = additionalInformation;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof DepartmentEntity that)) return false;
+        return getId().equals(that.getId()) && getName().equals(that.getName()) && Objects.equals(getDescription(), that.getDescription()) && Objects.equals(getAdditionalInformation(), that.getAdditionalInformation());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getName(), getDescription(), getAdditionalInformation());
     }
 }

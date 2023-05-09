@@ -7,6 +7,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 import java.util.List;
+import java.util.Objects;
 
 @Schema(description = "Department description")
 public class DepartmentDTO {
@@ -33,6 +34,21 @@ public class DepartmentDTO {
 
   public DepartmentDTO(String name) {
     this.name = name;
+  }
+
+  public DepartmentDTO(Integer id, String name, String description, String additionalInformation) {
+    this.id = id;
+    this.name = name;
+    this.description = description;
+    this.additionalInformation = additionalInformation;
+  }
+
+  public DepartmentDTO(Integer id, String name, String description, String additionalInformation, List<EmployeeDTO> listOfEmployees) {
+    this.id = id;
+    this.name = name;
+    this.description = description;
+    this.additionalInformation = additionalInformation;
+    this.listOfEmployees = listOfEmployees;
   }
 
   public Integer getId() {
@@ -73,6 +89,18 @@ public class DepartmentDTO {
 
   public void setListOfEmployees(List<EmployeeDTO> listOfEmployees) {
     this.listOfEmployees = listOfEmployees;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (!(o instanceof DepartmentDTO that)) return false;
+    return getId().equals(that.getId()) && getName().equals(that.getName()) && Objects.equals(getDescription(), that.getDescription()) && Objects.equals(getAdditionalInformation(), that.getAdditionalInformation()) && Objects.equals(getListOfEmployees(), that.getListOfEmployees());
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(getId(), getName(), getDescription(), getAdditionalInformation(), getListOfEmployees());
   }
 }
 

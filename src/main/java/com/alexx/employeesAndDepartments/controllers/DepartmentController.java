@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.constraints.Min;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,13 +25,13 @@ public class DepartmentController {
     @PostMapping("/departments")
     @Operation(summary = "Add department", description = "Add new department, Request body with name of department required, ID is generated automatically")
     public ResponseEntity<DepartmentDTO> addDepartment(@RequestBody DepartmentDTO departmentDTO) {
-        return ResponseEntity.ok(departmentService.addDepartment(departmentDTO));
+        return ResponseEntity.status(HttpStatus.CREATED).body(departmentService.addDepartment(departmentDTO));
     }
 
     @PutMapping("/departments")
     @Operation(summary = "Edit department", description = "Edit an existing department, Request body with ID of department required")
     public ResponseEntity<DepartmentDTO> editDepartment(@RequestBody DepartmentDTO departmentDTO) {
-        return ResponseEntity.ok(departmentService.editDepartment(departmentDTO));
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(departmentService.editDepartment(departmentDTO));
     }
 
     @DeleteMapping("/departments/{departmentId}")
@@ -40,7 +41,7 @@ public class DepartmentController {
                                                      @Parameter(description = "ID of the existing department to remove")
                                                      Integer id) {
         departmentService.deleteDepartment(id);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
     @GetMapping("/departments/{departmentId}")
