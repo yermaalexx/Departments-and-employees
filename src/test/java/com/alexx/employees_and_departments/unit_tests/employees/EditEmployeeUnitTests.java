@@ -17,6 +17,7 @@ import com.alexx.employees_and_departments.services.EmployeeService;
 
 import java.time.LocalDate;
 import java.util.Optional;
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -38,9 +39,9 @@ public class EditEmployeeUnitTests {
     @Test
     @DisplayName("Normal flow")
     public void editEmployeeNormal() {
-        EmployeeDTO employeeDTO = new EmployeeDTO(1, "Musk Ilon", LocalDate.of(1999, 03, 17), LocalDate.of(2020, 04, 15), 2, "Manager");
-        EmployeeEntity fromRepository = new EmployeeEntity(1, "Mesk Alon", LocalDate.of(1996, 03, 17), LocalDate.of(2021, 04, 15), 2, "Manager 2");
-        EmployeeEntity changedEntity = new EmployeeEntity(1, "Musk Ilon", LocalDate.of(1999, 03, 17), LocalDate.of(2020, 04, 15), 2, "Manager");
+        EmployeeDTO employeeDTO = new EmployeeDTO(UUID.fromString("1bf10eeb-7105-4102-9c50-00d9f880651e"), "Musk Ilon", LocalDate.of(1999, 03, 17), LocalDate.of(2020, 04, 15), UUID.fromString("86c6ff27-a386-4479-8cec-cfde91cb9474"), "Manager");
+        EmployeeEntity fromRepository = new EmployeeEntity(UUID.fromString("1bf10eeb-7105-4102-9c50-00d9f880651e"), "Mesk Alon", LocalDate.of(1996, 03, 17), LocalDate.of(2021, 04, 15), UUID.fromString("86c6ff27-a386-4479-8cec-cfde91cb9474"), "Manager 2");
+        EmployeeEntity changedEntity = new EmployeeEntity(UUID.fromString("1bf10eeb-7105-4102-9c50-00d9f880651e"), "Musk Ilon", LocalDate.of(1999, 03, 17), LocalDate.of(2020, 04, 15), UUID.fromString("86c6ff27-a386-4479-8cec-cfde91cb9474"), "Manager");
         given(employeeRepository.existsById(employeeDTO.getId())).willReturn(true);
         given(employeeRepository.findById(employeeDTO.getId())).willReturn(Optional.of(fromRepository));
         given(departmentRepository.existsById(employeeDTO.getIdOfDepartment())).willReturn(true);
@@ -53,7 +54,7 @@ public class EditEmployeeUnitTests {
     @Test
     @DisplayName("No employee with this ID")
     public void editEmployeeIdIsIncorrect() {
-        EmployeeDTO employeeDTO = new EmployeeDTO(1, "Musk Ilon", LocalDate.of(1999, 03, 17), LocalDate.of(2020, 04, 15), 2, "Manager");
+        EmployeeDTO employeeDTO = new EmployeeDTO(UUID.fromString("1bf10eeb-7105-4102-9c50-00d9f880651e"), "Musk Ilon", LocalDate.of(1999, 03, 17), LocalDate.of(2020, 04, 15), UUID.fromString("86c6ff27-a386-4479-8cec-cfde91cb9474"), "Manager");
         given(employeeRepository.existsById(employeeDTO.getId())).willReturn(false);
         assertThrows(NoEmployeeWithThisIDException.class, () -> employeeService.editEmployee(employeeDTO));
     }
@@ -61,14 +62,14 @@ public class EditEmployeeUnitTests {
     @Test
     @DisplayName("ID is empty")
     public void editEmployeeIdIsEmpty() {
-        EmployeeDTO employeeDTO = new EmployeeDTO(null, "Musk Ilon", LocalDate.of(1999, 03, 17), LocalDate.of(2020, 04, 15), 2, "Manager");
+        EmployeeDTO employeeDTO = new EmployeeDTO(null, "Musk Ilon", LocalDate.of(1999, 03, 17), LocalDate.of(2020, 04, 15), UUID.fromString("86c6ff27-a386-4479-8cec-cfde91cb9474"), "Manager");
         assertThrows(Exception.class, () -> employeeService.editEmployee(employeeDTO));
     }
 
     @Test
     @DisplayName("Date of birth less than 18 years ago")
     public void editEmployeeBirthDateIncorrect() {
-        EmployeeDTO employeeDTO = new EmployeeDTO(1, "Musk Ilon", LocalDate.of(2015, 03, 17), LocalDate.of(2020, 04, 15), 2, "Manager");
+        EmployeeDTO employeeDTO = new EmployeeDTO(UUID.fromString("1bf10eeb-7105-4102-9c50-00d9f880651e"), "Musk Ilon", LocalDate.of(2015, 03, 17), LocalDate.of(2020, 04, 15), UUID.fromString("86c6ff27-a386-4479-8cec-cfde91cb9474"), "Manager");
         assertThrows(Exception.class, () -> employeeService.editEmployee(employeeDTO));
     }
 

@@ -6,6 +6,7 @@ import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDate;
 import java.util.Objects;
+import java.util.UUID;
 
 import com.alexx.employees_and_departments.validation.Marker;
 import com.alexx.employees_and_departments.validation.OverMinimumAge;
@@ -14,8 +15,8 @@ import com.alexx.employees_and_departments.validation.OverMinimumAge;
 public class EmployeeDTO {
 
   @NotNull(groups = Marker.OnUpdate.class, message = "ID of employee must not be empty.")
-  @Schema(description = "Automatically generated employee ID", example = "7")
-  private Integer id;
+  @Schema(description = "Automatically generated employee ID", example = "1bf10eeb-7105-4102-9c50-00d9f880651e")
+  private UUID id;
 
   @NotBlank(groups = Marker.OnCreate.class, message = "Name of employee must not be empty.")
   @Schema(description = "Employee name", example = "Musk Ilon")
@@ -28,8 +29,8 @@ public class EmployeeDTO {
   @Schema(description = "Employment date of the employee", example = "2020-04-15")
   private LocalDate employmentDate;
 
-  @Schema(description = "ID of department of the employee", example = "2")
-  private Integer idOfDepartment;
+  @Schema(description = "ID of department of the employee", example = "86c6ff27-a386-4479-8cec-cfde91cb9474")
+  private UUID idOfDepartment;
 
   @Schema(description = "Employee job title", example = "Manager")
   private String jobTitle;
@@ -40,7 +41,7 @@ public class EmployeeDTO {
     this.name = name;
   }
 
-  public EmployeeDTO(Integer id, String name, LocalDate birthDate, LocalDate employmentDate, Integer idOfDepartment, String jobTitle) {
+  public EmployeeDTO(UUID id, String name, LocalDate birthDate, LocalDate employmentDate, UUID idOfDepartment, String jobTitle) {
     this.id = id;
     this.name = name;
     this.birthDate = birthDate;
@@ -49,11 +50,11 @@ public class EmployeeDTO {
     this.jobTitle = jobTitle;
   }
 
-  public Integer getId() {
+  public UUID getId() {
     return id;
   }
 
-  public void setId(Integer id) {
+  public void setId(UUID id) {
     this.id = id;
   }
 
@@ -81,11 +82,11 @@ public class EmployeeDTO {
     this.employmentDate = employmentDate;
   }
 
-  public Integer getIdOfDepartment() {
+  public UUID getIdOfDepartment() {
     return idOfDepartment;
   }
 
-  public void setIdOfDepartment(Integer idOfDepartment) {
+  public void setIdOfDepartment(UUID idOfDepartment) {
     this.idOfDepartment = idOfDepartment;
   }
 

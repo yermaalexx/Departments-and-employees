@@ -11,6 +11,8 @@ import com.alexx.employees_and_departments.exceptions.NoEmployeeWithThisIDExcept
 import com.alexx.employees_and_departments.repositories.EmployeeRepository;
 import com.alexx.employees_and_departments.services.EmployeeService;
 
+import java.util.UUID;
+
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
@@ -27,7 +29,7 @@ public class DeleteEmployeeUnitTests {
     @Test
     @DisplayName("Normal flow")
     public void deleteEmployeeNormal() {
-        int id = 3;
+        UUID id = UUID.fromString("1bf10eeb-7105-4102-9c50-00d9f880651e");
         given(employeeRepository.existsById(id)).willReturn(true);
         employeeService.deleteEmployee(id);
         verify(employeeRepository).deleteById(id);
@@ -36,7 +38,7 @@ public class DeleteEmployeeUnitTests {
     @Test
     @DisplayName("No employee with this ID")
     public void deleteEmployeeIdIsIncorrect() {
-        int id = 3;
+        UUID id = UUID.fromString("1bf10eeb-7105-4102-9c50-00d9f880651e");
         given(employeeRepository.existsById(id)).willReturn(false);
         assertThrows(NoEmployeeWithThisIDException.class, () -> employeeService.deleteEmployee(id));
     }

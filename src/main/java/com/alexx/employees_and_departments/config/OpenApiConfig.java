@@ -1,4 +1,4 @@
-package com.alexx.employees_and_departments.openAPI;
+package com.alexx.employees_and_departments.config;
 
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.info.Contact;

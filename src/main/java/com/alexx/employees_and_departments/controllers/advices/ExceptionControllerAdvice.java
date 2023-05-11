@@ -5,7 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import com.alexx.employees_and_departments.entities.ErrorDetails;
+import com.alexx.employees_and_departments.exceptions.ErrorDetails;
 import com.alexx.employees_and_departments.exceptions.NoDepartmentWithThisIDException;
 import com.alexx.employees_and_departments.exceptions.NoEmployeeWithThisIDException;
 
