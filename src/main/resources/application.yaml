@@ -1,0 +1,9 @@
+server:
+  port: 8080
+
+minimumAgeOfEmployee: 18
+
+spring:
+  profiles:
+    active: h2
+
