@@ -8,11 +8,10 @@
         <version>3.0.6</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>com.alexx</groupId>
-    <artifactId>employees_and_departments</artifactId>
+    <groupId>com.github.yermaalexx</groupId>
+    <artifactId>departments-and-employees</artifactId>
     <version>1.0.0-SNAPSHOT</version>
-    <name>employees_and_departments</name>
-    <description>employees_and_departments</description>
+    <name>departments-and-employees</name>
     <properties>
         <java.version>17</java.version>
     </properties>
