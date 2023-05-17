@@ -8,10 +8,12 @@
         <outputRelativeToContentRoot value="true" />
         <module name="employeesAndDepartments" />
         <module name="Departments-and-employees" />
+        <module name="employees_and_departments" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="Departments-and-employees" target="17" />
+      <module name="employees_and_departments" target="17" />
       <module name="employeesAndDepartments" target="17" />
     </bytecodeTargetLevel>
   </component>
@@ -19,6 +21,7 @@
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="Departments-and-employees" options="-parameters" />
       <module name="employeesAndDepartments" options="-parameters" />
+      <module name="employees_and_departments" options="-parameters" />
     </option>
   </component>
 </project>
