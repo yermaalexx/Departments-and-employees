@@ -6,6 +6,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.constraints.Min;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,6 +15,7 @@ import java.util.List;
 
 @RestController
 @Tag(name="Employees", description = "Allows to change employee data")
+@Slf4j
 public class EmployeeController {
 
     private final EmployeeService employeeService;
@@ -26,6 +28,7 @@ public class EmployeeController {
     @Operation(summary = "Add employee", description = "Add new employee, Request body with name of employee required, " +
             "ID is generated automatically, birthDate must be over 18 years ago, idOfDepartment must match the existing department")
     public ResponseEntity<EmployeeDTO> addEmployee(@RequestBody EmployeeDTO employeeDTO) {
+        log.info("");
         return ResponseEntity.status(HttpStatus.CREATED).body(employeeService.addEmployee(employeeDTO));
     }
 
