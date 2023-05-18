@@ -16,6 +16,7 @@ import org.modelmapper.ModelMapper;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -37,10 +38,10 @@ public class GetListOfEmployeesForDepartmentUnitTests {
     @Test
     @DisplayName("Normal flow")
     public void getListOfEmployeesForDepartmentNormal() {
-        Integer id = 3;
+        UUID id = UUID.fromString("86c6ff27-a386-4479-8cec-cfde91cb9474");
         given(departmentRepository.existsById(id)).willReturn(true);
-        EmployeeDTO employeeDTO = new EmployeeDTO(1, "Musk Ilon", LocalDate.of(1999, 03, 17), LocalDate.of(2020, 04, 15), 3, "Manager");
-        EmployeeEntity employeeEntity = new EmployeeEntity(1, "Musk Ilon", LocalDate.of(1999, 03, 17), LocalDate.of(2020, 04, 15), 3, "Manager");
+        EmployeeDTO employeeDTO = new EmployeeDTO(UUID.fromString("1bf10eeb-7105-4102-9c50-00d9f880651e"), "Musk Ilon", LocalDate.of(1999, 03, 17), LocalDate.of(2020, 04, 15), UUID.fromString("86c6ff27-a386-4479-8cec-cfde91cb9474"), "Manager");
+        EmployeeEntity employeeEntity = new EmployeeEntity(UUID.fromString("1bf10eeb-7105-4102-9c50-00d9f880651e"), "Musk Ilon", LocalDate.of(1999, 03, 17), LocalDate.of(2020, 04, 15), UUID.fromString("86c6ff27-a386-4479-8cec-cfde91cb9474"), "Manager");
         List<EmployeeEntity> employeeEntityList = List.of(employeeEntity);
         List<EmployeeDTO> employeeDTOList = List.of(employeeDTO);
         given(employeeRepository.findAll()).willReturn(employeeEntityList);
@@ -52,7 +53,7 @@ public class GetListOfEmployeesForDepartmentUnitTests {
     @Test
     @DisplayName("No department with this ID")
     public void getListOfEmployeesForDepartmentIdIsIncorrect() {
-        Integer id = 3;
+        UUID id = UUID.fromString("86c6ff27-a386-4479-8cec-cfde91cb9474");
         given(departmentRepository.existsById(id)).willReturn(false);
         assertThrows(NoDepartmentWithThisIDException.class, () -> departmentService.getListOfEmployeesForDepartment(id));
     }

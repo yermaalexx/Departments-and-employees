@@ -19,6 +19,7 @@ import org.modelmapper.ModelMapper;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -40,11 +41,11 @@ public class EditDepartmentUnitTests {
     @Test
     @DisplayName("Normal flow")
     public void editDepartmentNormal() {
-        DepartmentDTO departmentDTO = new DepartmentDTO(1, "Development department", "Some description", "Location: NYC");
-        DepartmentEntity fromRepository = new DepartmentEntity(1, "Old department", "Old description", "Location: NYC");
-        DepartmentEntity newEntity = new DepartmentEntity(1, "Development department", "Some description", "Location: NYC");
-        EmployeeDTO employeeDTO = new EmployeeDTO(1, "Musk Ilon", LocalDate.of(1999, 03, 17), LocalDate.of(2020, 04, 15), 1, "Manager");
-        EmployeeEntity employeeEntity = new EmployeeEntity(1, "Musk Ilon", LocalDate.of(1999, 03, 17), LocalDate.of(2020, 04, 15), 1, "Manager");
+        DepartmentDTO departmentDTO = new DepartmentDTO(UUID.fromString("86c6ff27-a386-4479-8cec-cfde91cb9474"), "Development department", "Some description", "Location: NYC");
+        DepartmentEntity fromRepository = new DepartmentEntity(UUID.fromString("86c6ff27-a386-4479-8cec-cfde91cb9474"), "Old department", "Old description", "Location: NYC");
+        DepartmentEntity newEntity = new DepartmentEntity(UUID.fromString("86c6ff27-a386-4479-8cec-cfde91cb9474"), "Development department", "Some description", "Location: NYC");
+        EmployeeDTO employeeDTO = new EmployeeDTO(UUID.fromString("1bf10eeb-7105-4102-9c50-00d9f880651e"), "Musk Ilon", LocalDate.of(1999, 03, 17), LocalDate.of(2020, 04, 15), UUID.fromString("86c6ff27-a386-4479-8cec-cfde91cb9474"), "Manager");
+        EmployeeEntity employeeEntity = new EmployeeEntity(UUID.fromString("1bf10eeb-7105-4102-9c50-00d9f880651e"), "Musk Ilon", LocalDate.of(1999, 03, 17), LocalDate.of(2020, 04, 15), UUID.fromString("86c6ff27-a386-4479-8cec-cfde91cb9474"), "Manager");
         List<EmployeeEntity> employeeEntityList = List.of(employeeEntity);
         List<EmployeeDTO> employeeDTOList = List.of(employeeDTO);
         given(departmentRepository.existsById(departmentDTO.getId())).willReturn(true);
@@ -52,7 +53,7 @@ public class EditDepartmentUnitTests {
         given(modelMapper.map(newEntity, DepartmentDTO.class)).willReturn(departmentDTO);
         given(employeeRepository.findAll()).willReturn(employeeEntityList);
         given(modelMapper.map(employeeEntity, EmployeeDTO.class)).willReturn(employeeDTO);
-        DepartmentDTO endDTO = new DepartmentDTO(1, "Development department", "Some description", "Location: NYC", employeeDTOList);
+        DepartmentDTO endDTO = new DepartmentDTO(UUID.fromString("86c6ff27-a386-4479-8cec-cfde91cb9474"), "Development department", "Some description", "Location: NYC", employeeDTOList);
         DepartmentDTO result = departmentService.editDepartment(departmentDTO);
         assertEquals(endDTO, result);
     }
@@ -60,7 +61,7 @@ public class EditDepartmentUnitTests {
     @Test
     @DisplayName("No department with this ID")
     public void editDepartmentIdIsIncorrect() {
-        DepartmentDTO departmentDTO = new DepartmentDTO(1, "Development department", "Some description", "Location: NYC");
+        DepartmentDTO departmentDTO = new DepartmentDTO(UUID.fromString("86c6ff27-a386-4479-8cec-cfde91cb9474"), "Development department", "Some description", "Location: NYC");
         given(departmentRepository.existsById(departmentDTO.getId())).willReturn(false);
         assertThrows(NoDepartmentWithThisIDException.class, () -> departmentService.editDepartment(departmentDTO));
     }

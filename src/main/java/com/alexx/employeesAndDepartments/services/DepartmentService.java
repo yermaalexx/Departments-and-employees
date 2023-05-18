@@ -14,6 +14,7 @@ import org.springframework.validation.annotation.Validated;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @Validated
@@ -55,7 +56,7 @@ public class DepartmentService {
         return departmentDTO;
     }
 
-    public void deleteDepartment(Integer id) {
+    public void deleteDepartment(UUID id) {
         if(id==null || !departmentRepository.existsById(id))
             throw new NoDepartmentWithThisIDException();
         departmentRepository.deleteById(id);
@@ -67,7 +68,7 @@ public class DepartmentService {
         });
     }
 
-    public DepartmentDTO getDepartment(Integer id) {
+    public DepartmentDTO getDepartment(UUID id) {
         if(id==null || !departmentRepository.existsById(id))
             throw new NoDepartmentWithThisIDException();
         DepartmentEntity departmentEntity = departmentRepository.findById(id).get();
@@ -76,7 +77,7 @@ public class DepartmentService {
         return departmentDTO;
     }
 
-    public List<EmployeeDTO> getListOfEmployeesForDepartment(Integer departmentID) {
+    public List<EmployeeDTO> getListOfEmployeesForDepartment(UUID departmentID) {
         if(departmentID==null || !departmentRepository.existsById(departmentID))
             throw new NoDepartmentWithThisIDException();
         return employeeListOfDepartment(departmentID);
@@ -92,7 +93,7 @@ public class DepartmentService {
         return departmentDTOList;
     }
 
-    public List<EmployeeDTO> employeeListOfDepartment(Integer departmentID) {
+    public List<EmployeeDTO> employeeListOfDepartment(UUID departmentID) {
         if(departmentID==null || !departmentRepository.existsById(departmentID))
             throw new NoDepartmentWithThisIDException();
         List<EmployeeDTO> listEmployeeDTO = new ArrayList<>();

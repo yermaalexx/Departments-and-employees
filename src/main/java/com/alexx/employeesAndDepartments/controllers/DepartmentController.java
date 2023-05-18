@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @Tag(name="Departments", description = "Allows to change department data")
@@ -37,9 +38,8 @@ public class DepartmentController {
     @DeleteMapping("/departments/{departmentId}")
     @Operation(summary = "Delete department", description = "Delete an existing department, ID of department in path required")
     public ResponseEntity<Void> deleteDepartment(@PathVariable("departmentId")
-                                                     @Min(value = 1, message = "ID of department must be positive.")
-                                                     @Parameter(description = "ID of the existing department to remove")
-                                                     Integer id) {
+                                                 @Parameter(description = "ID of the existing department to remove")
+                                                 UUID id) {
         departmentService.deleteDepartment(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
@@ -47,18 +47,16 @@ public class DepartmentController {
     @GetMapping("/departments/{departmentId}")
     @Operation(summary = "Get department", description = "Get an existing department with its list of employees, ID of department in path required")
     public ResponseEntity<DepartmentDTO> getDepartment(@PathVariable("departmentId")
-                                                           @Min(value = 1, message = "ID of department must be positive.")
-                                                           @Parameter(description = "ID of the existing department to get")
-                                                           Integer id) {
+                                                       @Parameter(description = "ID of the existing department to get")
+                                                       UUID id) {
         return ResponseEntity.ok(departmentService.getDepartment(id));
     }
 
     @GetMapping("/departments/{departmentId}/list")
     @Operation(summary = "Get list of employees", description = "Get list of employees in this department, ID of department in path required")
     public ResponseEntity<List<EmployeeDTO>> getListOfEmployeesForDepartment(@PathVariable("departmentId")
-                                                                                 @Min(value = 1, message = "ID of department must be positive.")
-                                                                                 @Parameter(description = "ID of the existing department to get its list of employees")
-                                                                                 Integer id) {
+                                                                             @Parameter(description = "ID of the existing department to get its list of employees")
+                                                                             UUID id) {
         return ResponseEntity.ok(departmentService.getListOfEmployeesForDepartment(id));
     }
 

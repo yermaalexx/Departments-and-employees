@@ -14,6 +14,7 @@ import org.springframework.validation.annotation.Validated;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @Validated
@@ -60,25 +61,26 @@ public class EmployeeService {
         return employeeDTO;
     }
 
-    public void deleteEmployee(Integer id) {
+    public void deleteEmployee(UUID id) {
         if(id==null || !employeeRepository.existsById(id))
             throw new NoEmployeeWithThisIDException();
         employeeRepository.deleteById(id);
     }
 
-    public EmployeeDTO getEmployee(Integer id) {
+    public EmployeeDTO getEmployee(UUID id) {
         if(id==null || !employeeRepository.existsById(id))
             throw new NoEmployeeWithThisIDException();
         EmployeeEntity employeeEntity = employeeRepository.findById(id).get();
         return modelMapper.map(employeeEntity, EmployeeDTO.class);
     }
 
-    public EmployeeDTO editDepartmentOfEmployee(Integer employeeID, Integer departmentID) {
+    public EmployeeDTO editDepartmentOfEmployee(UUID employeeID, UUID departmentID) {
         if(employeeID==null || !employeeRepository.existsById(employeeID))
             throw new NoEmployeeWithThisIDException();
-        if(departmentID!=-1 && (departmentID==null || !departmentRepository.existsById(departmentID)))
+        UUID nullValue = UUID.fromString("0-0-0-0-0");
+        if(departmentID.compareTo(nullValue)!=0 && (departmentID==null || !departmentRepository.existsById(departmentID)))
             throw new NoDepartmentWithThisIDException();
-        if(departmentID==-1)
+        if(departmentID.compareTo(nullValue)==0)
             departmentID=null;
         EmployeeEntity employeeEntity = employeeRepository.findById(employeeID).get();
         employeeEntity.setIdOfDepartment(departmentID);

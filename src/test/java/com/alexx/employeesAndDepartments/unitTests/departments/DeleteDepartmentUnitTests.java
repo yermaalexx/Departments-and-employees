@@ -14,6 +14,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.BDDMockito.given;
@@ -33,11 +34,11 @@ public class DeleteDepartmentUnitTests {
     @Test
     @DisplayName("Normal flow")
     public void deleteDepartmentNormal() {
-        Integer id = 3;
+        UUID id = UUID.fromString("86c6ff27-a386-4479-8cec-cfde91cb9474");
         given(departmentRepository.existsById(id)).willReturn(true);
-        EmployeeEntity employeeEntity = new EmployeeEntity(1, "Musk Ilon", LocalDate.of(1999, 03, 17), LocalDate.of(2020, 04, 15), 3, "Manager");
+        EmployeeEntity employeeEntity = new EmployeeEntity(UUID.fromString("1bf10eeb-7105-4102-9c50-00d9f880651e"), "Musk Ilon", LocalDate.of(1999, 03, 17), LocalDate.of(2020, 04, 15), UUID.fromString("86c6ff27-a386-4479-8cec-cfde91cb9474"), "Manager");
         List<EmployeeEntity> employeeEntityList = List.of(employeeEntity);
-        EmployeeEntity changedEntity = new EmployeeEntity(1, "Musk Ilon", LocalDate.of(1999, 03, 17), LocalDate.of(2020, 04, 15), null, "Manager");
+        EmployeeEntity changedEntity = new EmployeeEntity(UUID.fromString("1bf10eeb-7105-4102-9c50-00d9f880651e"), "Musk Ilon", LocalDate.of(1999, 03, 17), LocalDate.of(2020, 04, 15), null, "Manager");
         given(employeeRepository.findAll()).willReturn(employeeEntityList);
         departmentService.deleteDepartment(id);
         verify(departmentRepository).deleteById(id);
@@ -47,7 +48,7 @@ public class DeleteDepartmentUnitTests {
     @Test
     @DisplayName("No department with this ID")
     public void deleteDepartmentIdIsIncorrect() {
-        Integer id = 3;
+        UUID id = UUID.fromString("86c6ff27-a386-4479-8cec-cfde91cb9474");
         given(departmentRepository.existsById(id)).willReturn(false);
         assertThrows(NoDepartmentWithThisIDException.class, () -> departmentService.deleteDepartment(id));
     }
