@@ -1,4 +1,4 @@
-package com.github.yermaalexx.departmentsandemployees.unit_tests.employees;
+package com.github.yermaalexx.departmentsandemployees.unittests.employees;
 
 import com.github.yermaalexx.departmentsandemployees.services.EmployeeService;
 import org.junit.jupiter.api.DisplayName;

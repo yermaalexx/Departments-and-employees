@@ -1,4 +1,4 @@
-package com.github.yermaalexx.departmentsandemployees.unit_tests.departments;
+package com.github.yermaalexx.departmentsandemployees.unittests.departments;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -23,8 +23,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.BDDMockito.given;
 
 @ExtendWith(MockitoExtension.class)
-@DisplayName("Test method getListOfEmployeesForDepartment(Integer departmentID) from DepartmentService.class")
-public class GetListOfEmployeesForDepartmentUnitTests {
+@DisplayName("Test support method employeeListOfDepartment() from DepartmentService.class")
+public class EmployeeListOfDepartmentUnitTests {
 
     @Mock
     private DepartmentRepository departmentRepository;
@@ -37,7 +37,7 @@ public class GetListOfEmployeesForDepartmentUnitTests {
 
     @Test
     @DisplayName("Normal flow")
-    public void getListOfEmployeesForDepartmentNormal() {
+    public void employeeListOfDepartmentNormal() {
         Integer id = 3;
         given(departmentRepository.existsById(id)).willReturn(true);
         EmployeeDTO employeeDTO = new EmployeeDTO(1, "Musk Ilon", LocalDate.of(1999, 03, 17), LocalDate.of(2020, 04, 15), 3, "Manager");
@@ -46,16 +46,16 @@ public class GetListOfEmployeesForDepartmentUnitTests {
         List<EmployeeDTO> employeeDTOList = List.of(employeeDTO);
         given(employeeRepository.findAll()).willReturn(employeeEntityList);
         given(modelMapper.map(employeeEntity, EmployeeDTO.class)).willReturn(employeeDTO);
-        List<EmployeeDTO> result = departmentService.getListOfEmployeesForDepartment(id);
+        List<EmployeeDTO> result = departmentService.employeeListOfDepartment(id);
         assertEquals(employeeDTOList, result);
     }
 
     @Test
     @DisplayName("No department with this ID")
-    public void getListOfEmployeesForDepartmentIdIsIncorrect() {
+    public void employeeListOfDepartmentIdIsIncorrect() {
         Integer id = 3;
         given(departmentRepository.existsById(id)).willReturn(false);
-        assertThrows(NoDepartmentWithThisIDException.class, () -> departmentService.getListOfEmployeesForDepartment(id));
+        assertThrows(NoDepartmentWithThisIDException.class, () -> departmentService.employeeListOfDepartment(id));
     }
 
 }

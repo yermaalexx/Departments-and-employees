@@ -1,4 +1,4 @@
-package com.github.yermaalexx.departmentsandemployees.unit_tests.departments;
+package com.github.yermaalexx.departmentsandemployees.unittests.departments;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
