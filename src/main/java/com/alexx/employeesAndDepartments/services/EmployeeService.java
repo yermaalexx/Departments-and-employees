@@ -8,6 +8,7 @@ import com.alexx.employeesAndDepartments.repositories.DepartmentRepository;
 import com.alexx.employeesAndDepartments.repositories.EmployeeRepository;
 import com.alexx.employeesAndDepartments.validation.Marker;
 import jakarta.validation.Valid;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
@@ -17,6 +18,7 @@ import java.util.List;
 
 @Service
 @Validated
+@Slf4j
 public class EmployeeService {
     private final EmployeeRepository employeeRepository;
     private final DepartmentRepository departmentRepository;
@@ -36,14 +38,16 @@ public class EmployeeService {
         employeeDTO.setId(null);
         EmployeeEntity employeeEntity = modelMapper.map(employeeDTO, EmployeeEntity.class);
         employeeEntity = employeeRepository.save(employeeEntity);
+        log.info("New employee saved with ID: {}", employeeEntity.getId());
         employeeDTO.setId(employeeEntity.getId());
         return employeeDTO;
     }
 
     @Validated(Marker.OnUpdate.class)
     public EmployeeDTO editEmployee(@Valid EmployeeDTO employeeDTO) {
-        if(employeeDTO.getId()==null || !employeeRepository.existsById(employeeDTO.getId()))
+        if(employeeDTO.getId()==null || !employeeRepository.existsById(employeeDTO.getId())) {
             throw new NoEmployeeWithThisIDException();
+        }
         EmployeeEntity employeeEntity = employeeRepository.findById(employeeDTO.getId()).get();
         if(employeeDTO.getName()!=null)
             employeeEntity.setName(employeeDTO.getName());
@@ -56,33 +60,40 @@ public class EmployeeService {
         if(employeeDTO.getJobTitle()!=null)
             employeeEntity.setJobTitle(employeeDTO.getJobTitle());
         employeeRepository.save(employeeEntity);
+        log.info("Employee with ID {} edited", employeeDTO.getId());
         employeeDTO = modelMapper.map(employeeEntity, EmployeeDTO.class);
         return employeeDTO;
     }
 
     public void deleteEmployee(Integer id) {
-        if(id==null || !employeeRepository.existsById(id))
+        if(id==null || !employeeRepository.existsById(id)) {
             throw new NoEmployeeWithThisIDException();
+        }
         employeeRepository.deleteById(id);
     }
 
     public EmployeeDTO getEmployee(Integer id) {
-        if(id==null || !employeeRepository.existsById(id))
+        if(id==null || !employeeRepository.existsById(id)) {
             throw new NoEmployeeWithThisIDException();
+        }
         EmployeeEntity employeeEntity = employeeRepository.findById(id).get();
+        log.info("Successfully");
         return modelMapper.map(employeeEntity, EmployeeDTO.class);
     }
 
     public EmployeeDTO editDepartmentOfEmployee(Integer employeeID, Integer departmentID) {
-        if(employeeID==null || !employeeRepository.existsById(employeeID))
+        if(employeeID==null || !employeeRepository.existsById(employeeID)) {
             throw new NoEmployeeWithThisIDException();
-        if(departmentID!=-1 && (departmentID==null || !departmentRepository.existsById(departmentID)))
+        }
+        if(departmentID!=-1 && (departmentID==null || !departmentRepository.existsById(departmentID))) {
             throw new NoDepartmentWithThisIDException();
+        }
         if(departmentID==-1)
             departmentID=null;
         EmployeeEntity employeeEntity = employeeRepository.findById(employeeID).get();
         employeeEntity.setIdOfDepartment(departmentID);
         employeeRepository.save(employeeEntity);
+        log.info("New department ID: {}", departmentID);
         return modelMapper.map(employeeEntity, EmployeeDTO.class);
     }
 
@@ -91,6 +102,7 @@ public class EmployeeService {
         employeeRepository.findAll().forEach(entity -> {
             listOfDTO.add(modelMapper.map(entity, EmployeeDTO.class));
         });
+        log.info("Successfully");
         return listOfDTO;
     }
 }

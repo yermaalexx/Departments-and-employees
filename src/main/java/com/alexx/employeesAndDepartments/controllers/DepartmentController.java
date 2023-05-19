@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.constraints.Min;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +16,7 @@ import java.util.List;
 
 @RestController
 @Tag(name="Departments", description = "Allows to change department data")
+@Slf4j
 public class DepartmentController {
     private final DepartmentService departmentService;
 
@@ -25,12 +27,14 @@ public class DepartmentController {
     @PostMapping("/departments")
     @Operation(summary = "Add department", description = "Add new department, Request body with name of department required, ID is generated automatically")
     public ResponseEntity<DepartmentDTO> addDepartment(@RequestBody DepartmentDTO departmentDTO) {
+        log.info("Add department");
         return ResponseEntity.status(HttpStatus.CREATED).body(departmentService.addDepartment(departmentDTO));
     }
 
     @PutMapping("/departments")
     @Operation(summary = "Edit department", description = "Edit an existing department, Request body with ID of department required")
     public ResponseEntity<DepartmentDTO> editDepartment(@RequestBody DepartmentDTO departmentDTO) {
+        log.info("Edit department");
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(departmentService.editDepartment(departmentDTO));
     }
 
@@ -40,7 +44,9 @@ public class DepartmentController {
                                                      @Min(value = 1, message = "ID of department must be positive.")
                                                      @Parameter(description = "ID of the existing department to remove")
                                                      Integer id) {
+        log.info("Delete department with ID: {}", id);
         departmentService.deleteDepartment(id);
+        log.info("Department deleted");
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
@@ -50,6 +56,7 @@ public class DepartmentController {
                                                            @Min(value = 1, message = "ID of department must be positive.")
                                                            @Parameter(description = "ID of the existing department to get")
                                                            Integer id) {
+        log.info("Get department with ID: {}", id);
         return ResponseEntity.ok(departmentService.getDepartment(id));
     }
 
@@ -59,12 +66,14 @@ public class DepartmentController {
                                                                                  @Min(value = 1, message = "ID of department must be positive.")
                                                                                  @Parameter(description = "ID of the existing department to get its list of employees")
                                                                                  Integer id) {
+        log.info("Get list of employees for department with ID: {}", id);
         return ResponseEntity.ok(departmentService.getListOfEmployeesForDepartment(id));
     }
 
     @GetMapping("/departments/all")
     @Operation(summary = "Get all departments", description = "Get all departments with their lists of employees")
     public ResponseEntity<List<DepartmentDTO>> getListOfDepartments() {
+        log.info("Get list of all departments");
         return ResponseEntity.ok(departmentService.getListOfDepartments());
     }
 

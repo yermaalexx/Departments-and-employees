@@ -19,4 +19,9 @@ public class Violation {
     public String getMessage() {
         return message;
     }
+
+    @Override
+    public String toString() {
+        return fieldName + ": " + message;
+    }
 }

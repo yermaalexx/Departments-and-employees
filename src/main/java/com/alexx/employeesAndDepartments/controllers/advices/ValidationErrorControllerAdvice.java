@@ -3,6 +3,7 @@ package com.alexx.employeesAndDepartments.controllers.advices;
 import com.alexx.employeesAndDepartments.validation.ValidationErrorResponse;
 import com.alexx.employeesAndDepartments.validation.Violation;
 import jakarta.validation.ConstraintViolationException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -14,6 +15,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @ControllerAdvice
+@Slf4j
 public class ValidationErrorControllerAdvice {
 
     @ExceptionHandler(ConstraintViolationException.class)
@@ -26,6 +28,7 @@ public class ValidationErrorControllerAdvice {
                         violation.getMessage()
                 )
         ).collect(Collectors.toList());
+        log.warn(violations.toString());
         return new ValidationErrorResponse(violations);
     }
 
@@ -36,6 +39,7 @@ public class ValidationErrorControllerAdvice {
         final List<Violation> violations = e.getBindingResult().getFieldErrors().stream()
                 .map(error -> new Violation(error.getField(), error.getDefaultMessage()))
                 .collect(Collectors.toList());
+        log.warn(violations.toString());
         return new ValidationErrorResponse(violations);
     }
 }

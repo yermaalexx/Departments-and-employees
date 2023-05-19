@@ -8,6 +8,7 @@ import com.alexx.employeesAndDepartments.repositories.DepartmentRepository;
 import com.alexx.employeesAndDepartments.repositories.EmployeeRepository;
 import com.alexx.employeesAndDepartments.validation.Marker;
 import jakarta.validation.Valid;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
@@ -17,6 +18,7 @@ import java.util.List;
 
 @Service
 @Validated
+@Slf4j
 public class DepartmentService {
     private final EmployeeRepository employeeRepository;
     private final DepartmentRepository departmentRepository;
@@ -34,6 +36,7 @@ public class DepartmentService {
         DepartmentEntity departmentEntity = modelMapper.map(departmentDTO, DepartmentEntity.class);
         departmentEntity = departmentRepository.save(departmentEntity);
         departmentDTO.setId(departmentEntity.getId());
+        log.info("New department saved with ID: {}", departmentEntity.getId());
         return departmentDTO;
     }
 
@@ -50,6 +53,7 @@ public class DepartmentService {
             departmentEntity.setAdditionalInformation(departmentDTO.getAdditionalInformation());
         departmentRepository.save(departmentEntity);
         departmentDTO = modelMapper.map(departmentEntity, DepartmentDTO.class);
+        log.info("Department with ID {} edited", departmentDTO.getId());
         List<EmployeeDTO> employeeListDTO = employeeListOfDepartment(departmentDTO.getId());
         departmentDTO.setListOfEmployees(employeeListDTO);
         return departmentDTO;
@@ -73,12 +77,14 @@ public class DepartmentService {
         DepartmentEntity departmentEntity = departmentRepository.findById(id).get();
         DepartmentDTO departmentDTO = modelMapper.map(departmentEntity, DepartmentDTO.class);
         departmentDTO.setListOfEmployees(employeeListOfDepartment(id));
+        log.info("Successfully");
         return departmentDTO;
     }
 
     public List<EmployeeDTO> getListOfEmployeesForDepartment(Integer departmentID) {
         if(departmentID==null || !departmentRepository.existsById(departmentID))
             throw new NoDepartmentWithThisIDException();
+        log.info("Successfully");
         return employeeListOfDepartment(departmentID);
     }
 
@@ -89,6 +95,7 @@ public class DepartmentService {
             departmentDTO.setListOfEmployees(employeeListOfDepartment(departmentDTO.getId()));
             departmentDTOList.add(departmentDTO);
         });
+        log.info("Successfully");
         return departmentDTOList;
     }
 
