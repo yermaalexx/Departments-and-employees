@@ -40,13 +40,13 @@ public class GetListOfEmployeesForDepartmentUnitTests {
     public void getListOfEmployeesForDepartmentNormal() {
         UUID id = UUID.fromString("86c6ff27-a386-4479-8cec-cfde91cb9474");
         given(departmentRepository.existsById(id)).willReturn(true);
-        EmployeeDTO employeeDTO = new EmployeeDTO(UUID.fromString("1bf10eeb-7105-4102-9c50-00d9f880651e"), "Musk Ilon", LocalDate.of(1999, 03, 17), LocalDate.of(2020, 04, 15), UUID.fromString("86c6ff27-a386-4479-8cec-cfde91cb9474"), "Manager");
+        EmployeeDTO employeeDTO = new EmployeeDTO("1bf10eeb-7105-4102-9c50-00d9f880651e", "Musk Ilon", LocalDate.of(1999, 03, 17), LocalDate.of(2020, 04, 15), "86c6ff27-a386-4479-8cec-cfde91cb9474", "Manager");
         EmployeeEntity employeeEntity = new EmployeeEntity(UUID.fromString("1bf10eeb-7105-4102-9c50-00d9f880651e"), "Musk Ilon", LocalDate.of(1999, 03, 17), LocalDate.of(2020, 04, 15), UUID.fromString("86c6ff27-a386-4479-8cec-cfde91cb9474"), "Manager");
         List<EmployeeEntity> employeeEntityList = List.of(employeeEntity);
         List<EmployeeDTO> employeeDTOList = List.of(employeeDTO);
         given(employeeRepository.findAll()).willReturn(employeeEntityList);
         given(modelMapper.map(employeeEntity, EmployeeDTO.class)).willReturn(employeeDTO);
-        List<EmployeeDTO> result = departmentService.getListOfEmployeesForDepartment(id);
+        List<EmployeeDTO> result = departmentService.getListOfEmployeesForDepartment(id.toString());
         assertEquals(employeeDTOList, result);
     }
 
@@ -55,7 +55,7 @@ public class GetListOfEmployeesForDepartmentUnitTests {
     public void getListOfEmployeesForDepartmentIdIsIncorrect() {
         UUID id = UUID.fromString("86c6ff27-a386-4479-8cec-cfde91cb9474");
         given(departmentRepository.existsById(id)).willReturn(false);
-        assertThrows(NoDepartmentWithThisIDException.class, () -> departmentService.getListOfEmployeesForDepartment(id));
+        assertThrows(NoDepartmentWithThisIDException.class, () -> departmentService.getListOfEmployeesForDepartment(id.toString()));
     }
 
 }

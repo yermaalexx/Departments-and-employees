@@ -41,7 +41,7 @@ public class EmployeeController {
     @Operation(summary = "Delete employee", description = "Delete an existing employee, ID of employee in path required")
     public ResponseEntity<Void> deleteEmployee(@PathVariable("employeeId")
                                                @Parameter(description = "ID of the existing employee to remove")
-                                               UUID id) {
+                                               String id) {
         employeeService.deleteEmployee(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
@@ -50,7 +50,7 @@ public class EmployeeController {
     @Operation(summary = "Get employee", description = "Get an existing employee, ID of employee in path required")
     public ResponseEntity<EmployeeDTO> getEmployee(@PathVariable("employeeId")
                                                    @Parameter(description = "ID of the existing employee to get")
-                                                   UUID id) {
+                                                   String id) {
         return ResponseEntity.ok(employeeService.getEmployee(id));
     }
 
@@ -60,10 +60,10 @@ public class EmployeeController {
     public ResponseEntity<EmployeeDTO> editDepartmentOfEmployee(
             @PathVariable("employeeId")
             @Parameter(description = "ID of the existing employee")
-            UUID employeeID,
+            String employeeID,
             @PathVariable("newDepartmentId")
             @Parameter(description = "New ID of department, 0-0-0-0-0 to set null")
-            UUID departmentID) {
+            String departmentID) {
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(employeeService.editDepartmentOfEmployee(employeeID, departmentID));
     }
 

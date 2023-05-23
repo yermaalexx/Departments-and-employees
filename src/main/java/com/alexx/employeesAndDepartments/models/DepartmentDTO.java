@@ -15,7 +15,7 @@ public class DepartmentDTO {
 
   @NotNull(groups = Marker.OnUpdate.class, message = "ID of department must not be empty.")
   @Schema(description = "Automatically generated department ID", example = "86c6ff27-a386-4479-8cec-cfde91cb9474")
-  private UUID id;
+  private String id;
 
   @NotBlank(groups = Marker.OnCreate.class, message = "Name of department must not be empty.")
   @Schema(description = "Department name", example = "Development department")
@@ -37,14 +37,14 @@ public class DepartmentDTO {
     this.name = name;
   }
 
-  public DepartmentDTO(UUID id, String name, String description, String additionalInformation) {
+  public DepartmentDTO(String id, String name, String description, String additionalInformation) {
     this.id = id;
     this.name = name;
     this.description = description;
     this.additionalInformation = additionalInformation;
   }
 
-  public DepartmentDTO(UUID id, String name, String description, String additionalInformation, List<EmployeeDTO> listOfEmployees) {
+  public DepartmentDTO(String id, String name, String description, String additionalInformation, List<EmployeeDTO> listOfEmployees) {
     this.id = id;
     this.name = name;
     this.description = description;
@@ -52,11 +52,11 @@ public class DepartmentDTO {
     this.listOfEmployees = listOfEmployees;
   }
 
-  public UUID getId() {
+  public String getId() {
     return id;
   }
 
-  public void setId(UUID id) {
+  public void setId(String id) {
     this.id = id;
   }
 

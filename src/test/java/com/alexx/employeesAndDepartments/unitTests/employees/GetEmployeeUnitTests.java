@@ -39,7 +39,7 @@ public class GetEmployeeUnitTests {
         given(employeeRepository.existsById(id)).willReturn(true);
         EmployeeEntity fromRepository = new EmployeeEntity(UUID.fromString("1bf10eeb-7105-4102-9c50-00d9f880651e"), "Musk Ilon", LocalDate.of(1999, 03, 17), LocalDate.of(2020, 04, 15), UUID.fromString("86c6ff27-a386-4479-8cec-cfde91cb9474"), "Manager");
         given(employeeRepository.findById(id)).willReturn(Optional.of(fromRepository));
-        employeeService.getEmployee(id);
+        employeeService.getEmployee(id.toString());
         verify(modelMapper).map(fromRepository, EmployeeDTO.class);
     }
 
@@ -48,7 +48,7 @@ public class GetEmployeeUnitTests {
     public void getEmployeeIdIsIncorrect() {
         UUID id = UUID.fromString("1bf10eeb-7105-4102-9c50-00d9f880651e");
         given(employeeRepository.existsById(id)).willReturn(false);
-        assertThrows(NoEmployeeWithThisIDException.class, () -> employeeService.getEmployee(id));
+        assertThrows(NoEmployeeWithThisIDException.class, () -> employeeService.getEmployee(id.toString()));
     }
 
 }

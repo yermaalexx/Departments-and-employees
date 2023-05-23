@@ -39,7 +39,7 @@ public class DepartmentController {
     @Operation(summary = "Delete department", description = "Delete an existing department, ID of department in path required")
     public ResponseEntity<Void> deleteDepartment(@PathVariable("departmentId")
                                                  @Parameter(description = "ID of the existing department to remove")
-                                                 UUID id) {
+                                                 String id) {
         departmentService.deleteDepartment(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
@@ -48,7 +48,7 @@ public class DepartmentController {
     @Operation(summary = "Get department", description = "Get an existing department with its list of employees, ID of department in path required")
     public ResponseEntity<DepartmentDTO> getDepartment(@PathVariable("departmentId")
                                                        @Parameter(description = "ID of the existing department to get")
-                                                       UUID id) {
+                                                       String id) {
         return ResponseEntity.ok(departmentService.getDepartment(id));
     }
 
@@ -56,7 +56,7 @@ public class DepartmentController {
     @Operation(summary = "Get list of employees", description = "Get list of employees in this department, ID of department in path required")
     public ResponseEntity<List<EmployeeDTO>> getListOfEmployeesForDepartment(@PathVariable("departmentId")
                                                                              @Parameter(description = "ID of the existing department to get its list of employees")
-                                                                             UUID id) {
+                                                                             String id) {
         return ResponseEntity.ok(departmentService.getListOfEmployeesForDepartment(id));
     }
 

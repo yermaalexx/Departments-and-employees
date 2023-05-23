@@ -35,42 +35,42 @@ public class AddEmployeeUnitTests {
     @Test
     @DisplayName("Normal flow")
     public void addEmployeeNormal() {
-        EmployeeDTO employeeDTO = new EmployeeDTO(null, "Musk Ilon", LocalDate.of(1999, 03, 17), LocalDate.of(2020, 04, 15), UUID.fromString("86c6ff27-a386-4479-8cec-cfde91cb9474"), "Manager");
+        EmployeeDTO employeeDTO = new EmployeeDTO(null, "Musk Ilon", LocalDate.of(1999, 03, 17), LocalDate.of(2020, 04, 15), "86c6ff27-a386-4479-8cec-cfde91cb9474", "Manager");
         EmployeeEntity fromRepository = new EmployeeEntity(UUID.fromString("1bf10eeb-7105-4102-9c50-00d9f880651e"), "Musk Ilon", LocalDate.of(1999, 03, 17), LocalDate.of(2020, 04, 15), UUID.fromString("86c6ff27-a386-4479-8cec-cfde91cb9474"), "Manager");
         EmployeeEntity afterMapper = new EmployeeEntity(null, "Musk Ilon", LocalDate.of(1999, 03, 17), LocalDate.of(2020, 04, 15), UUID.fromString("86c6ff27-a386-4479-8cec-cfde91cb9474"), "Manager");
-        given(departmentRepository.existsById(employeeDTO.getIdOfDepartment())).willReturn(true);
+        given(departmentRepository.existsById(UUID.fromString(employeeDTO.getIdOfDepartment()))).willReturn(true);
         given(modelMapper.map(employeeDTO, EmployeeEntity.class)).willReturn(afterMapper);
         given(employeeRepository.save(afterMapper)).willReturn(fromRepository);
         EmployeeDTO result = employeeService.addEmployee(employeeDTO);
-        assertEquals(new EmployeeDTO(UUID.fromString("1bf10eeb-7105-4102-9c50-00d9f880651e"), "Musk Ilon", LocalDate.of(1999, 03, 17), LocalDate.of(2020, 04, 15), UUID.fromString("86c6ff27-a386-4479-8cec-cfde91cb9474"), "Manager")
+        assertEquals(new EmployeeDTO("1bf10eeb-7105-4102-9c50-00d9f880651e", "Musk Ilon", LocalDate.of(1999, 03, 17), LocalDate.of(2020, 04, 15), "86c6ff27-a386-4479-8cec-cfde91cb9474", "Manager")
                 , result);
     }
 
     @Test
     @DisplayName("Department with employee's idOfDepartment does not exist")
     public void addEmployeeIdOfDepartmentNotExist() {
-        EmployeeDTO employeeDTO = new EmployeeDTO(null, "Musk Ilon", LocalDate.of(1999, 03, 17), LocalDate.of(2020, 04, 15), UUID.fromString("86c6ff27-a386-4479-8cec-cfde91cb9474"), "Manager");
+        EmployeeDTO employeeDTO = new EmployeeDTO(null, "Musk Ilon", LocalDate.of(1999, 03, 17), LocalDate.of(2020, 04, 15), "86c6ff27-a386-4479-8cec-cfde91cb9474", "Manager");
         EmployeeEntity fromRepository = new EmployeeEntity(UUID.fromString("1bf10eeb-7105-4102-9c50-00d9f880651e"), "Musk Ilon", LocalDate.of(1999, 03, 17), LocalDate.of(2020, 04, 15), null, "Manager");
         EmployeeEntity afterMapper = new EmployeeEntity(null, "Musk Ilon", LocalDate.of(1999, 03, 17), LocalDate.of(2020, 04, 15), null, "Manager");
-        given(departmentRepository.existsById(employeeDTO.getIdOfDepartment())).willReturn(false);
+        given(departmentRepository.existsById(UUID.fromString(employeeDTO.getIdOfDepartment()))).willReturn(false);
         given(modelMapper.map(employeeDTO, EmployeeEntity.class)).willReturn(afterMapper);
         given(employeeRepository.save(afterMapper)).willReturn(fromRepository);
         EmployeeDTO result = employeeService.addEmployee(employeeDTO);
-        assertEquals(new EmployeeDTO(UUID.fromString("1bf10eeb-7105-4102-9c50-00d9f880651e"), "Musk Ilon", LocalDate.of(1999, 03, 17), LocalDate.of(2020, 04, 15), null, "Manager")
+        assertEquals(new EmployeeDTO("1bf10eeb-7105-4102-9c50-00d9f880651e", "Musk Ilon", LocalDate.of(1999, 03, 17), LocalDate.of(2020, 04, 15), null, "Manager")
                 , result);
     }
 
     @Test
     @DisplayName("Name is empty")
     public void addEmployeeNameIsEmpty() {
-        EmployeeDTO employeeDTO = new EmployeeDTO(null, "", LocalDate.of(1999, 03, 17), LocalDate.of(2020, 04, 15), UUID.fromString("86c6ff27-a386-4479-8cec-cfde91cb9474"), "Manager");
+        EmployeeDTO employeeDTO = new EmployeeDTO(null, "", LocalDate.of(1999, 03, 17), LocalDate.of(2020, 04, 15), "86c6ff27-a386-4479-8cec-cfde91cb9474", "Manager");
         assertThrows(Exception.class, () -> employeeService.addEmployee(employeeDTO));
     }
 
     @Test
     @DisplayName("Date of birth less than 18 years ago")
     public void addEmployeeBirthDateIncorrect() {
-        EmployeeDTO employeeDTO = new EmployeeDTO(null, "Musk Ilon", LocalDate.of(2015, 03, 17), LocalDate.of(2020, 04, 15), UUID.fromString("86c6ff27-a386-4479-8cec-cfde91cb9474"), "Manager");
+        EmployeeDTO employeeDTO = new EmployeeDTO(null, "Musk Ilon", LocalDate.of(2015, 03, 17), LocalDate.of(2020, 04, 15), "86c6ff27-a386-4479-8cec-cfde91cb9474", "Manager");
         assertThrows(Exception.class, () -> employeeService.addEmployee(employeeDTO));
     }
 

@@ -30,7 +30,7 @@ public class DeleteEmployeeUnitTests {
     public void deleteEmployeeNormal() {
         UUID id = UUID.fromString("1bf10eeb-7105-4102-9c50-00d9f880651e");
         given(employeeRepository.existsById(id)).willReturn(true);
-        employeeService.deleteEmployee(id);
+        employeeService.deleteEmployee(id.toString());
         verify(employeeRepository).deleteById(id);
     }
 
@@ -39,7 +39,7 @@ public class DeleteEmployeeUnitTests {
     public void deleteEmployeeIdIsIncorrect() {
         UUID id = UUID.fromString("1bf10eeb-7105-4102-9c50-00d9f880651e");
         given(employeeRepository.existsById(id)).willReturn(false);
-        assertThrows(NoEmployeeWithThisIDException.class, () -> employeeService.deleteEmployee(id));
+        assertThrows(NoEmployeeWithThisIDException.class, () -> employeeService.deleteEmployee(id.toString()));
     }
 
 }

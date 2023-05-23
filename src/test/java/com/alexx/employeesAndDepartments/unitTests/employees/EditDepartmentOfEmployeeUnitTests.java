@@ -46,7 +46,7 @@ public class EditDepartmentOfEmployeeUnitTests {
         given(employeeRepository.existsById(employeeID)).willReturn(true);
         given(departmentRepository.existsById(departmentID)).willReturn(true);
         given(employeeRepository.findById(employeeID)).willReturn(Optional.of(fromRepository));
-        employeeService.editDepartmentOfEmployee(employeeID, departmentID);
+        employeeService.editDepartmentOfEmployee(employeeID.toString(), departmentID.toString());
         verify(employeeRepository).save(changedEntity);
         verify(modelMapper).map(changedEntity, EmployeeDTO.class);
     }
@@ -57,7 +57,7 @@ public class EditDepartmentOfEmployeeUnitTests {
         UUID employeeID = UUID.fromString("1bf10eeb-7105-4102-9c50-00d9f880651e");
         UUID departmentID = UUID.fromString("86c6ff27-a386-4479-8cec-cfde91cb9474");
         given(employeeRepository.existsById(employeeID)).willReturn(false);
-        assertThrows(NoEmployeeWithThisIDException.class, () -> employeeService.editDepartmentOfEmployee(employeeID, departmentID));
+        assertThrows(NoEmployeeWithThisIDException.class, () -> employeeService.editDepartmentOfEmployee(employeeID.toString(), departmentID.toString()));
     }
 
     @Test
@@ -67,7 +67,7 @@ public class EditDepartmentOfEmployeeUnitTests {
         UUID departmentID = UUID.fromString("86c6ff27-a386-4479-8cec-cfde91cb9474");
         given(employeeRepository.existsById(employeeID)).willReturn(true);
         given(departmentRepository.existsById(departmentID)).willReturn(false);
-        assertThrows(NoDepartmentWithThisIDException.class, () -> employeeService.editDepartmentOfEmployee(employeeID, departmentID));
+        assertThrows(NoDepartmentWithThisIDException.class, () -> employeeService.editDepartmentOfEmployee(employeeID.toString(), departmentID.toString()));
     }
 
     @Test
@@ -79,7 +79,7 @@ public class EditDepartmentOfEmployeeUnitTests {
         EmployeeEntity changedEntity = new EmployeeEntity(UUID.fromString("1bf10eeb-7105-4102-9c50-00d9f880651e"), "Musk Ilon", LocalDate.of(1999, 03, 17), LocalDate.of(2020, 04, 15), null, "Manager");
         given(employeeRepository.existsById(employeeID)).willReturn(true);
         given(employeeRepository.findById(employeeID)).willReturn(Optional.of(fromRepository));
-        employeeService.editDepartmentOfEmployee(employeeID, departmentID);
+        employeeService.editDepartmentOfEmployee(employeeID.toString(), departmentID.toString());
         verify(employeeRepository).save(changedEntity);
         verify(modelMapper).map(changedEntity, EmployeeDTO.class);
     }

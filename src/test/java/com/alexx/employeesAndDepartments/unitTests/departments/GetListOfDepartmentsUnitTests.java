@@ -39,18 +39,18 @@ public class GetListOfDepartmentsUnitTests {
     @DisplayName("Normal flow")
     public void getListOfDepartmentsNormal() {
         DepartmentEntity departmentEntity = new DepartmentEntity(UUID.fromString("86c6ff27-a386-4479-8cec-cfde91cb9474"), "Development department", "Some description", "Location: NYC");
-        DepartmentDTO departmentDTO = new DepartmentDTO(UUID.fromString("86c6ff27-a386-4479-8cec-cfde91cb9474"), "Development department", "Some description", "Location: NYC");
+        DepartmentDTO departmentDTO = new DepartmentDTO("86c6ff27-a386-4479-8cec-cfde91cb9474", "Development department", "Some description", "Location: NYC");
         List<DepartmentEntity> departmentEntityList = List.of(departmentEntity);
         given(departmentRepository.findAll()).willReturn(departmentEntityList);
         given(modelMapper.map(departmentEntity, DepartmentDTO.class)).willReturn(departmentDTO);
         given(departmentRepository.existsById(UUID.fromString("86c6ff27-a386-4479-8cec-cfde91cb9474"))).willReturn(true);
-        EmployeeDTO employeeDTO = new EmployeeDTO(UUID.fromString("1bf10eeb-7105-4102-9c50-00d9f880651e"), "Musk Ilon", LocalDate.of(1999, 03, 17), LocalDate.of(2020, 04, 15), UUID.fromString("86c6ff27-a386-4479-8cec-cfde91cb9474"), "Manager");
+        EmployeeDTO employeeDTO = new EmployeeDTO("1bf10eeb-7105-4102-9c50-00d9f880651e", "Musk Ilon", LocalDate.of(1999, 03, 17), LocalDate.of(2020, 04, 15), "86c6ff27-a386-4479-8cec-cfde91cb9474", "Manager");
         EmployeeEntity employeeEntity = new EmployeeEntity(UUID.fromString("1bf10eeb-7105-4102-9c50-00d9f880651e"), "Musk Ilon", LocalDate.of(1999, 03, 17), LocalDate.of(2020, 04, 15), UUID.fromString("86c6ff27-a386-4479-8cec-cfde91cb9474"), "Manager");
         List<EmployeeEntity> employeeEntityList = List.of(employeeEntity);
         List<EmployeeDTO> employeeDTOList = List.of(employeeDTO);
         given(employeeRepository.findAll()).willReturn(employeeEntityList);
         given(modelMapper.map(employeeEntity, EmployeeDTO.class)).willReturn(employeeDTO);
-        DepartmentDTO endDTO = new DepartmentDTO(UUID.fromString("86c6ff27-a386-4479-8cec-cfde91cb9474"), "Development department", "Some description", "Location: NYC", employeeDTOList);
+        DepartmentDTO endDTO = new DepartmentDTO("86c6ff27-a386-4479-8cec-cfde91cb9474", "Development department", "Some description", "Location: NYC", employeeDTOList);
         List<DepartmentDTO> departmentDTOList = List.of(endDTO);
         List<DepartmentDTO> result = departmentService.getListOfDepartments();
         assertEquals(departmentDTOList, result);

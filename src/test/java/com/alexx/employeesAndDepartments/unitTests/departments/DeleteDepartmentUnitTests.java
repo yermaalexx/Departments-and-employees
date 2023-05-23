@@ -40,7 +40,7 @@ public class DeleteDepartmentUnitTests {
         List<EmployeeEntity> employeeEntityList = List.of(employeeEntity);
         EmployeeEntity changedEntity = new EmployeeEntity(UUID.fromString("1bf10eeb-7105-4102-9c50-00d9f880651e"), "Musk Ilon", LocalDate.of(1999, 03, 17), LocalDate.of(2020, 04, 15), null, "Manager");
         given(employeeRepository.findAll()).willReturn(employeeEntityList);
-        departmentService.deleteDepartment(id);
+        departmentService.deleteDepartment(id.toString());
         verify(departmentRepository).deleteById(id);
         verify(employeeRepository).save(changedEntity);
     }
@@ -50,7 +50,7 @@ public class DeleteDepartmentUnitTests {
     public void deleteDepartmentIdIsIncorrect() {
         UUID id = UUID.fromString("86c6ff27-a386-4479-8cec-cfde91cb9474");
         given(departmentRepository.existsById(id)).willReturn(false);
-        assertThrows(NoDepartmentWithThisIDException.class, () -> departmentService.deleteDepartment(id));
+        assertThrows(NoDepartmentWithThisIDException.class, () -> departmentService.deleteDepartment(id.toString()));
     }
 
 }
