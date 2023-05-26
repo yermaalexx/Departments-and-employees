@@ -28,7 +28,8 @@ public class EmployeeController {
     @Operation(summary = "Add employee", description = "Add new employee, Request body with name of employee required, " +
             "ID is generated automatically, birthDate must be over 18 years ago, idOfDepartment must match the existing department")
     public ResponseEntity<EmployeeDTO> addEmployee(@RequestBody EmployeeDTO employeeDTO) {
-        log.info("Add employee");
+        log.info("Add employee...");
+        log.debug("name: {}, birth date: {}", employeeDTO.getName(), employeeDTO.getBirthDate());
         return ResponseEntity.status(HttpStatus.CREATED).body(employeeService.addEmployee(employeeDTO));
     }
 
@@ -36,7 +37,8 @@ public class EmployeeController {
     @Operation(summary = "Edit employee", description = "Edit an existing employee, Request body with ID of employee required, " +
             "birthDate must be over 18 years ago, idOfDepartment must match the existing department")
     public ResponseEntity<EmployeeDTO> editEmployee(@RequestBody EmployeeDTO employeeDTO) {
-        log.info("Edit employee");
+        log.info("Edit employee...");
+        log.debug("ID = {}", employeeDTO.getId());
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(employeeService.editEmployee(employeeDTO));
     }
 
@@ -46,9 +48,10 @@ public class EmployeeController {
                                                    @Min(value = 1, message = "ID of employee must be positive.")
                                                    @Parameter(description = "ID of the existing employee to remove")
                                                    Integer id) {
-        log.info("Delete employee with ID: {}", id);
+        log.info("Delete employee...");
+        log.debug("ID = {}", id);
         employeeService.deleteEmployee(id);
-        log.info("Employee deleted");
+        log.info("Employee with ID = {} deleted.", id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
@@ -58,7 +61,8 @@ public class EmployeeController {
                                                        @Min(value = 1, message = "ID of employee must be positive.")
                                                        @Parameter(description = "ID of the existing employee to get")
                                                        Integer id) {
-        log.info("Get employee with ID: {}", id);
+        log.info("Get employee...");
+        log.debug("ID = {}", id);
         return ResponseEntity.ok(employeeService.getEmployee(id));
     }
 
@@ -74,14 +78,15 @@ public class EmployeeController {
             @Min(value = -1, message = "ID of department must be positive, or -1 to make it null.")
             @Parameter(description = "New ID of department, -1 to set null")
             Integer departmentID) {
-        log.info("For employee with ID {} set new ID of department: {}", employeeID, departmentID);
+        log.info("Change ID of department for employee...");
+        log.debug("For employee with ID = {} set new ID of department: {}.", employeeID, departmentID);
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(employeeService.editDepartmentOfEmployee(employeeID, departmentID));
     }
 
     @GetMapping("/employees/all")
     @Operation(summary = "Get all employees", description = "Get list of all employees")
     public ResponseEntity<List<EmployeeDTO>> getListOfEmployees() {
-        log.info("Get list of all employees");
+        log.info("Get list of all employees...");
         return ResponseEntity.ok(employeeService.getListOfEmployees());
     }
 }

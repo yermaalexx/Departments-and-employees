@@ -38,7 +38,7 @@ public class EmployeeService {
         employeeDTO.setId(null);
         EmployeeEntity employeeEntity = modelMapper.map(employeeDTO, EmployeeEntity.class);
         employeeEntity = employeeRepository.save(employeeEntity);
-        log.info("New employee saved with ID: {}", employeeEntity.getId());
+        log.info("New employee saved with ID = {}.", employeeEntity.getId());
         employeeDTO.setId(employeeEntity.getId());
         return employeeDTO;
     }
@@ -60,7 +60,7 @@ public class EmployeeService {
         if(employeeDTO.getJobTitle()!=null)
             employeeEntity.setJobTitle(employeeDTO.getJobTitle());
         employeeRepository.save(employeeEntity);
-        log.info("Employee with ID {} edited", employeeDTO.getId());
+        log.info("Employee with ID = {} edited.", employeeDTO.getId());
         employeeDTO = modelMapper.map(employeeEntity, EmployeeDTO.class);
         return employeeDTO;
     }
@@ -77,7 +77,7 @@ public class EmployeeService {
             throw new NoEmployeeWithThisIDException();
         }
         EmployeeEntity employeeEntity = employeeRepository.findById(id).get();
-        log.info("Successfully");
+        log.info("Employee with ID = {} received.", id);
         return modelMapper.map(employeeEntity, EmployeeDTO.class);
     }
 
@@ -102,7 +102,7 @@ public class EmployeeService {
         employeeRepository.findAll().forEach(entity -> {
             listOfDTO.add(modelMapper.map(entity, EmployeeDTO.class));
         });
-        log.info("Successfully");
+        log.info("List of all employees received.");
         return listOfDTO;
     }
 }
