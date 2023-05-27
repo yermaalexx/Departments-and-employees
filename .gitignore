@@ -1,6 +1,9 @@
 target/
 target/classes/*
 
+logs/
+*.log
+
 ### STS ###
 .apt_generated
 .classpath

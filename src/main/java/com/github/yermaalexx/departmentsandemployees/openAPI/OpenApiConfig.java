@@ -1,4 +1,8 @@
+<<<<<<<< HEAD:src/main/java/com/alexx/employeesAndDepartments/config/OpenApiConfig.java
+package com.alexx.employeesAndDepartments.config;
+========
 package com.github.yermaalexx.departmentsandemployees.openAPI;
+>>>>>>>> master:src/main/java/com/github/yermaalexx/departmentsandemployees/openAPI/OpenApiConfig.java
 
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.info.Contact;
