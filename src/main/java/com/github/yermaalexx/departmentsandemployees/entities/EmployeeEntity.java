@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 
 import java.time.LocalDate;
 import java.util.Objects;
+import java.util.UUID;
 
 @Entity
 @Table(schema = "public", name = "employees")
@@ -12,7 +13,7 @@ public class EmployeeEntity {
     @Id
     @GeneratedValue
     @Column(nullable = false)
-    private Integer id;
+    private UUID id;
 
     @Column
     private String name;
@@ -24,16 +25,16 @@ public class EmployeeEntity {
     private LocalDate employmentDate;
 
     @Column
-    private Integer idOfDepartment;
+    private UUID idOfDepartment;
 
     @Column
     private String jobTitle;
 
-    public Integer getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 
@@ -61,11 +62,11 @@ public class EmployeeEntity {
         this.employmentDate = employmentDate;
     }
 
-    public Integer getIdOfDepartment() {
+    public UUID getIdOfDepartment() {
         return idOfDepartment;
     }
 
-    public void setIdOfDepartment(Integer idOfDepartment) {
+    public void setIdOfDepartment(UUID idOfDepartment) {
         this.idOfDepartment = idOfDepartment;
     }
 
@@ -80,7 +81,7 @@ public class EmployeeEntity {
     public EmployeeEntity() {
     }
 
-    public EmployeeEntity(Integer id, String name, LocalDate birthDate, LocalDate employmentDate, Integer idOfDepartment, String jobTitle) {
+    public EmployeeEntity(UUID id, String name, LocalDate birthDate, LocalDate employmentDate, UUID idOfDepartment, String jobTitle) {
         this.id = id;
         this.name = name;
         this.birthDate = birthDate;

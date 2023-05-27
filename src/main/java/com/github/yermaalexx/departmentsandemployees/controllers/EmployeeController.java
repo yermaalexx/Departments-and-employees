@@ -5,7 +5,6 @@ import com.github.yermaalexx.departmentsandemployees.services.EmployeeService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.validation.constraints.Min;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -39,9 +38,8 @@ public class EmployeeController {
     @DeleteMapping("/employees/{employeeId}")
     @Operation(summary = "Delete employee", description = "Delete an existing employee, ID of employee in path required")
     public ResponseEntity<Void> deleteEmployee(@PathVariable("employeeId")
-                                                   @Min(value = 1, message = "ID of employee must be positive.")
-                                                   @Parameter(description = "ID of the existing employee to remove")
-                                                   Integer id) {
+                                               @Parameter(description = "ID of the existing employee to remove")
+                                               String id) {
         employeeService.deleteEmployee(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
@@ -49,24 +47,21 @@ public class EmployeeController {
     @GetMapping("/employees/{employeeId}")
     @Operation(summary = "Get employee", description = "Get an existing employee, ID of employee in path required")
     public ResponseEntity<EmployeeDTO> getEmployee(@PathVariable("employeeId")
-                                                       @Min(value = 1, message = "ID of employee must be positive.")
-                                                       @Parameter(description = "ID of the existing employee to get")
-                                                       Integer id) {
+                                                   @Parameter(description = "ID of the existing employee to get")
+                                                   String id) {
         return ResponseEntity.ok(employeeService.getEmployee(id));
     }
 
     @PatchMapping("/employees/{employeeId}/{newDepartmentId}")
     @Operation(summary = "Set new idOfDepartment", description = "Set new idOfDepartment for existing employee, " +
-            "ID's of employee and department in path required, if newDepartmentId = -1, then null will be setted")
+            "ID's of employee and department in path required, if newDepartmentId is 0-0-0-0-0, then null will be setted")
     public ResponseEntity<EmployeeDTO> editDepartmentOfEmployee(
             @PathVariable("employeeId")
-            @Min(value = 1, message = "ID of employee must be positive.")
             @Parameter(description = "ID of the existing employee")
-            Integer employeeID,
+            String employeeID,
             @PathVariable("newDepartmentId")
-            @Min(value = -1, message = "ID of department must be positive, or -1 to make it null.")
-            @Parameter(description = "New ID of department, -1 to set null")
-            Integer departmentID) {
+            @Parameter(description = "New ID of department, 0-0-0-0-0 to set null")
+            String departmentID) {
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(employeeService.editDepartmentOfEmployee(employeeID, departmentID));
     }
 

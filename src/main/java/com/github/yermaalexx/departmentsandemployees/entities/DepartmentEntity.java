@@ -3,6 +3,7 @@ package com.github.yermaalexx.departmentsandemployees.entities;
 import jakarta.persistence.*;
 
 import java.util.Objects;
+import java.util.UUID;
 
 @Entity
 @Table(schema = "public", name = "departments")
@@ -10,7 +11,7 @@ public class DepartmentEntity {
     @Id
     @GeneratedValue
     @Column(nullable = false)
-    private Integer id;
+    private UUID id;
 
     @Column
     private String name;
@@ -21,11 +22,11 @@ public class DepartmentEntity {
     @Column
     private String additionalInformation;
 
-    public Integer getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 
@@ -56,7 +57,7 @@ public class DepartmentEntity {
     public DepartmentEntity() {
     }
 
-    public DepartmentEntity(Integer id, String name, String description, String additionalInformation) {
+    public DepartmentEntity(UUID id, String name, String description, String additionalInformation) {
         this.id = id;
         this.name = name;
         this.description = description;
