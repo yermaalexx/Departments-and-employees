@@ -3,24 +3,24 @@
 ### REST API application that allows you to add, edit, delete and get *employee and department* data
 ***
 ### Run the application
-The app uses *PostgreSQL*:
-- name of database - employeesdepartments
-- username - postgres
-- password - postgres
+
+The app has two profiles:
+- h2: with database in memory, h2 console enabled, username: "name", password: "".
+- postgre-local: with local PostgreSQL database, url: "jdbc:postgresql://localhost:5432/employeesdepartments", username: "postgres", password: "postgres".
 
 The app supports *Swagger OpenAPI Specification*.
 After launching the application the link is available http://localhost:8080/swagger-ui/index.html
 ***
 #### Employee entity
-- id - *automatically generated employee ID*, integer, example: 7
+- id - *automatically generated employee ID*, UUID, example: 1bf10eeb-7105-4102-9c50-00d9f880651e
 - name - *employee name*, string, example: Musk Ilon
-- birthDate - *employee birth date*, string($date), example: 1999-03-17
-- employmentDate - *employment date of the employee*, string($date), example: 2020-04-15
-- idOfDepartment - *ID of department of the employee*, integer, example: 2
+- birthDate - *employee birth date*, example: 1999-03-17
+- employmentDate - *employment date of the employee*, example: 2020-04-15
+- idOfDepartment - *ID of department of the employee*, UUID, example: 86c6ff27-a386-4479-8cec-cfde91cb9474
 - jobTitle - *employee job title*, string, example: Manager
 
 #### Department entity
-- id - *automatically generated department ID*, integer, example: 2
+- id - *automatically generated department ID*, UUID, example: 86c6ff27-a386-4479-8cec-cfde91cb9474
 - name - *department name*, string, example: Development department
 - description - *brief description of the department*, string, example: Department is responsible for the acquisition of funds
 - additionalInformation - *some additional information about the department*, string, example: Location: NYC
@@ -34,11 +34,11 @@ After launching the application the link is available http://localhost:8080/swag
 Add new employee, Request body with name of employee required, ID is generated automatically, birthDate must be over 18 years ago, idOfDepartment must match the existing department (otherwise it will be setted to null)
 
 Request body:
-`{"name": "Musk Ilon", "birthDate": "1999-03-17", "employmentDate": "2020-04-15", "idOfDepartment": 2, "jobTitle": "Manager"}`
+`{"name": "Musk Ilon", "birthDate": "1999-03-17", "employmentDate": "2020-04-15", "idOfDepartment": "86c6ff27-a386-4479-8cec-cfde91cb9474", "jobTitle": "Manager"}`
 
 ##### Response: 
 
-Status: 201 CREATED,    Response body: `{"id": 7, "name": "Musk Ilon", "birthDate": "1999-03-17", "employmentDate": "2020-04-15", "idOfDepartment": 2, "jobTitle": "Manager"}`
+Status: 201 CREATED,    Response body: `{"id": "1bf10eeb-7105-4102-9c50-00d9f880651e", "name": "Musk Ilon", "birthDate": "1999-03-17", "employmentDate": "2020-04-15", "idOfDepartment": "86c6ff27-a386-4479-8cec-cfde91cb9474", "jobTitle": "Manager"}`
 
 Status: 406 NOT ACCEPTABLE,  Response body: `{"violations": [{"fieldName": "addEmployee.employeeDTO.name", "message": "Name of employee must not be empty."}, {"fieldName": "addEmployee.employeeDTO.birthDate", "message": "Employee must be over minimum age."}]}`
 ******
@@ -48,22 +48,22 @@ Status: 406 NOT ACCEPTABLE,  Response body: `{"violations": [{"fieldName": "addE
 Edit an existing employee, Request body with ID of employee required, birthDate must be over 18 years ago, idOfDepartment must match the existing department (otherwise idOfDepartment will not be changed)
 
 Request body:
-`{"id": 7, "name": "Musk Ilon", "birthDate": "1999-03-17", "employmentDate": "2020-04-15", "idOfDepartment": 2, "jobTitle": "Manager"}`
+`{"id": "1bf10eeb-7105-4102-9c50-00d9f880651e", "name": "Musk Ilon", "birthDate": "1999-03-17", "employmentDate": "2020-04-15", "idOfDepartment": "86c6ff27-a386-4479-8cec-cfde91cb9474", "jobTitle": "Manager"}`
 
 ##### Response: 
 
-Status: 202 ACCEPTED,    Response body: `{"id": 7, "name": "Musk Ilon", "birthDate": "1999-03-17", "employmentDate": "2020-04-15", "idOfDepartment": 2, "jobTitle": "Manager"}`
+Status: 202 ACCEPTED,    Response body: `{"id": "1bf10eeb-7105-4102-9c50-00d9f880651e", "name": "Musk Ilon", "birthDate": "1999-03-17", "employmentDate": "2020-04-15", "idOfDepartment": "86c6ff27-a386-4479-8cec-cfde91cb9474", "jobTitle": "Manager"}`
 
 Status: 404 NOT FOUND,  Response body: `{"message": "No employee with this ID."}`
 ******
 - #### Set new ID of department for the employee
 ##### Request: `PATCH /employees/{employeeId}/{newDepartmentId}`
 
-Set new idOfDepartment for existing employee, ID's of employee and department in path required, if newDepartmentId = -1, then null will be setted
+Set new idOfDepartment for existing employee, ID's of employee and department in path required, if newDepartmentId = 0-0-0-0-0, then null will be setted
 
 ##### Response:
 
-Status: 202 ACCEPTED,    Response body: `{"id": 7, "name": "Musk Ilon", "birthDate": "1999-03-17", "employmentDate": "2020-04-15", "idOfDepartment": 2, "jobTitle": "Manager"}`
+Status: 202 ACCEPTED,    Response body: `{"id": "1bf10eeb-7105-4102-9c50-00d9f880651e", "name": "Musk Ilon", "birthDate": "1999-03-17", "employmentDate": "2020-04-15", "idOfDepartment": "86c6ff27-a386-4479-8cec-cfde91cb9474", "jobTitle": "Manager"}`
 
 Status: 404 NOT FOUND,  Response body: `{"message": "No employee with this ID."}`
 
@@ -87,7 +87,7 @@ Get an existing employee, ID of employee in path required
 
 ##### Response:
 
-Status: 200 OK,    Response body: `{"id": 7, "name": "Musk Ilon", "birthDate": "1999-03-17", "employmentDate": "2020-04-15", "idOfDepartment": 2, "jobTitle": "Manager"}`
+Status: 200 OK,    Response body: `{"id": "1bf10eeb-7105-4102-9c50-00d9f880651e", "name": "Musk Ilon", "birthDate": "1999-03-17", "employmentDate": "2020-04-15", "idOfDepartment": "86c6ff27-a386-4479-8cec-cfde91cb9474", "jobTitle": "Manager"}`
 
 Status: 404 NOT FOUND,  Response body: `{"message": "No employee with this ID."}`
 ******
@@ -98,7 +98,7 @@ Get list of all employees
 
 ##### Response:
 
-Status: 200 OK,    Response body: `[{"id": 7, "name": "Musk Ilon", "birthDate": "1999-03-17", "employmentDate": "2020-04-15", "idOfDepartment": 2, "jobTitle": "Manager"}]`
+Status: 200 OK,    Response body: `[{"id": "1bf10eeb-7105-4102-9c50-00d9f880651e", "name": "Musk Ilon", "birthDate": "1999-03-17", "employmentDate": "2020-04-15", "idOfDepartment": "86c6ff27-a386-4479-8cec-cfde91cb9474", "jobTitle": "Manager"}]`
 
 ******
 ******
@@ -112,7 +112,7 @@ Request body:
 
 ##### Response:
 
-Status: 201 CREATED,    Response body: `{"id": 2, "name": "Development department", "description": "Department is responsible for the acquisition of funds", "additionalInformation": "Location: NYC"}`
+Status: 201 CREATED,    Response body: `{"id": "86c6ff27-a386-4479-8cec-cfde91cb9474", "name": "Development department", "description": "Department is responsible for the acquisition of funds", "additionalInformation": "Location: NYC"}`
 
 Status: 406 NOT ACCEPTABLE,  Response body: `{"violations": [{"fieldName": "addDepartment.departmentDTO.name", "message": "Name of department must not be empty."}]}`
 ******
@@ -122,11 +122,11 @@ Status: 406 NOT ACCEPTABLE,  Response body: `{"violations": [{"fieldName": "addD
 Edit an existing department, Request body with ID of department required
 
 Request body:
-`{"id": 2, "name": "Development department", "description": "Department is responsible for the acquisition of funds", "additionalInformation": "Location: NYC"}`
+`{"id": "86c6ff27-a386-4479-8cec-cfde91cb9474", "name": "Development department", "description": "Department is responsible for the acquisition of funds", "additionalInformation": "Location: NYC"}`
 
 ##### Response:
 
-Status: 202 ACCEPTED,    Response body: `{"id": 2, "name": "Development department", "description": "Department is responsible for the acquisition of funds", "additionalInformation": "Location: NYC"}`
+Status: 202 ACCEPTED,    Response body: `{"id": "86c6ff27-a386-4479-8cec-cfde91cb9474", "name": "Development department", "description": "Department is responsible for the acquisition of funds", "additionalInformation": "Location: NYC"}`
 
 Status: 404 NOT FOUND,  Response body: `{"message": "No department with this ID."}`
 ******
@@ -148,7 +148,7 @@ Get an existing department with its list of employees, ID of department in path 
 
 ##### Response:
 
-Status: 200 OK,    Response body: `{"id": 2, "name": "Development department", "description": "Department is responsible for the acquisition of funds", "additionalInformation": "Location: NYC", "listOfEmployees": [{"id": 7, "name": "Musk Ilon", "birthDate": "1999-03-17", "employmentDate": "2020-04-15", "idOfDepartment": 2, "jobTitle": "Manager"}]}`
+Status: 200 OK,    Response body: `{"id": "86c6ff27-a386-4479-8cec-cfde91cb9474", "name": "Development department", "description": "Department is responsible for the acquisition of funds", "additionalInformation": "Location: NYC", "listOfEmployees": [{"id": "1bf10eeb-7105-4102-9c50-00d9f880651e", "name": "Musk Ilon", "birthDate": "1999-03-17", "employmentDate": "2020-04-15", "idOfDepartment": "86c6ff27-a386-4479-8cec-cfde91cb9474", "jobTitle": "Manager"}]}`
 
 Status: 404 NOT FOUND,  Response body: `{"message": "No department with this ID."}`
 ******
@@ -159,7 +159,7 @@ Get list of employees in this department, ID of department in path required
 
 ##### Response:
 
-Status: 200 OK,    Response body: `[{"id": 7, "name": "Musk Ilon", "birthDate": "1999-03-17", "employmentDate": "2020-04-15", "idOfDepartment": 2, "jobTitle": "Manager"}]`
+Status: 200 OK,    Response body: `[{"id": "1bf10eeb-7105-4102-9c50-00d9f880651e", "name": "Musk Ilon", "birthDate": "1999-03-17", "employmentDate": "2020-04-15", "idOfDepartment": "86c6ff27-a386-4479-8cec-cfde91cb9474", "jobTitle": "Manager"}]`
 
 Status: 404 NOT FOUND,  Response body: `{"message": "No department with this ID."}`
 ******
@@ -170,7 +170,7 @@ Get all departments with their lists of employees
 
 ##### Response:
 
-Status: 200 OK,    Response body: `[{"id": 2, "name": "Development department", "description": "Department is responsible for the acquisition of funds", "additionalInformation": "Location: NYC", "listOfEmployees": [{"id": 7, "name": "Musk Ilon", "birthDate": "1999-03-17", "employmentDate": "2020-04-15", "idOfDepartment": 2, "jobTitle": "Manager"}]}]`
+Status: 200 OK,    Response body: `[{"id": "86c6ff27-a386-4479-8cec-cfde91cb9474", "name": "Development department", "description": "Department is responsible for the acquisition of funds", "additionalInformation": "Location: NYC", "listOfEmployees": [{"id": "1bf10eeb-7105-4102-9c50-00d9f880651e", "name": "Musk Ilon", "birthDate": "1999-03-17", "employmentDate": "2020-04-15", "idOfDepartment": "86c6ff27-a386-4479-8cec-cfde91cb9474", "jobTitle": "Manager"}]}]`
 
 ******
 
