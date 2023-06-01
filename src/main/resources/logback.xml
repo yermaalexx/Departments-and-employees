@@ -22,7 +22,7 @@
     <appender name="Async-Appender" class="ch.qos.logback.classic.AsyncAppender">
         <appender-ref ref="RollingFile-Appender" />
     </appender>
-    <logger name="com.alexx.employeesAndDepartments" level="debug" >
+    <logger name="com.alexx.departmentsandemployees" level="debug" >
         <appender-ref  ref="Async-Appender" />
     </logger>
     <logger name="org.springframework" level="info" >
