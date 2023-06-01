@@ -1,9 +1,5 @@
 package com.github.yermaalexx.departmentsandemployees.services;
 
-import jakarta.validation.Valid;
-import org.modelmapper.ModelMapper;
-import org.springframework.stereotype.Service;
-import org.springframework.validation.annotation.Validated;
 import com.github.yermaalexx.departmentsandemployees.entities.EmployeeEntity;
 import com.github.yermaalexx.departmentsandemployees.exceptions.NoDepartmentWithThisIDException;
 import com.github.yermaalexx.departmentsandemployees.exceptions.NoEmployeeWithThisIDException;
@@ -12,6 +8,7 @@ import com.github.yermaalexx.departmentsandemployees.repositories.DepartmentRepo
 import com.github.yermaalexx.departmentsandemployees.repositories.EmployeeRepository;
 import com.github.yermaalexx.departmentsandemployees.validation.Marker;
 import jakarta.validation.Valid;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
@@ -22,6 +19,7 @@ import java.util.UUID;
 
 @Service
 @Validated
+@Slf4j
 public class EmployeeService {
     private final EmployeeRepository employeeRepository;
     private final DepartmentRepository departmentRepository;
@@ -47,6 +45,7 @@ public class EmployeeService {
         employeeDTO.setId(null);
         EmployeeEntity employeeEntity = modelMapper.map(employeeDTO, EmployeeEntity.class);
         employeeEntity = employeeRepository.save(employeeEntity);
+        log.info("New employee saved with ID = {}.", employeeEntity.getId());
         employeeDTO.setId(employeeEntity.getId().toString());
         return employeeDTO;
     }
@@ -75,6 +74,7 @@ public class EmployeeService {
         if(employeeDTO.getJobTitle()!=null)
             employeeEntity.setJobTitle(employeeDTO.getJobTitle());
         employeeRepository.save(employeeEntity);
+        log.info("Employee with ID = {} edited.", uuid);
         employeeDTO = modelMapper.map(employeeEntity, EmployeeDTO.class);
         return employeeDTO;
     }
@@ -97,6 +97,7 @@ public class EmployeeService {
         if(uuid==null || !employeeRepository.existsById(uuid))
             throw new NoEmployeeWithThisIDException();
         EmployeeEntity employeeEntity = employeeRepository.findById(uuid).get();
+        log.info("Employee with ID = {} received.", id);
         return modelMapper.map(employeeEntity, EmployeeDTO.class);
     }
 
@@ -117,6 +118,7 @@ public class EmployeeService {
         EmployeeEntity employeeEntity = employeeRepository.findById(employeeUUID).get();
         employeeEntity.setIdOfDepartment(departmentUUID);
         employeeRepository.save(employeeEntity);
+        log.info("New department ID: {}", departmentUUID);
         return modelMapper.map(employeeEntity, EmployeeDTO.class);
     }
 
@@ -125,6 +127,7 @@ public class EmployeeService {
         employeeRepository.findAll().forEach(entity -> {
             listOfDTO.add(modelMapper.map(entity, EmployeeDTO.class));
         });
+        log.info("List of all employees received.");
         return listOfDTO;
     }
 }
