@@ -1,4 +1,4 @@
-package com.github.yermaalexx.departmentsandemployees.entities;
+package com.github.yermaalexx.departmentsandemployees.exceptions;
 
 public class ErrorDetails {
     private String message;

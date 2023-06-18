@@ -1,6 +1,6 @@
 package com.github.yermaalexx.departmentsandemployees.controllers.advices;
 
-import com.github.yermaalexx.departmentsandemployees.entities.ErrorDetails;
+import com.github.yermaalexx.departmentsandemployees.exceptions.ErrorDetails;
 import com.github.yermaalexx.departmentsandemployees.exceptions.NoDepartmentWithThisIDException;
 import com.github.yermaalexx.departmentsandemployees.exceptions.NoEmployeeWithThisIDException;
 import lombok.extern.slf4j.Slf4j;

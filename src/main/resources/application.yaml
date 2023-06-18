@@ -6,3 +6,5 @@ minimumAgeOfEmployee: 18
 spring:
   jpa:
     open-in-view: false
+  liquibase:
+    enabled: false

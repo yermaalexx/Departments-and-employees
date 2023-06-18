@@ -118,7 +118,7 @@ public class EmployeeService {
         EmployeeEntity employeeEntity = employeeRepository.findById(employeeUUID).get();
         employeeEntity.setIdOfDepartment(departmentUUID);
         employeeRepository.save(employeeEntity);
-        log.info("New department ID: {}", departmentUUID);
+        log.info("New department ID: {}.", departmentUUID);
         return modelMapper.map(employeeEntity, EmployeeDTO.class);
     }
 

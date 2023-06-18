@@ -1,0 +1,42 @@
+version: '3.8'
+services:
+
+  postgresql-db:
+    image: postgres:14.7-alpine
+    user: postgres
+    environment:
+      POSTGRES_DB: "employeesdepartments"
+      POSTGRES_PASSWORD: "postgres"
+      PGDATA: "/var/lib/postgresql/data/pgdata"
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready", "-d", "employeesdepartments", "-U", "postgres" ]
+      interval: 5s
+      timeout: 3s
+      retries: 50
+    ports:
+      - "5432:5432"
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    restart: unless-stopped
+
+  application:
+    image: departments-and-employees:1.0.0
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    depends_on:
+      postgresql-db:
+        condition: service_healthy
+    volumes:
+      - logs:/application/logs
+    environment:
+      - SERVER_PORT=8080
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgresql-db/employeesdepartments
+      - spring.profiles.active=postgre-local
+
+volumes:
+  db-data:
+  logs:
+  
