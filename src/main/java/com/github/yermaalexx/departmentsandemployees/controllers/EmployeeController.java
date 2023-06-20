@@ -27,8 +27,8 @@ public class EmployeeController {
     @Operation(summary = "Add employee", description = "Add new employee, Request body with name of employee required, " +
             "ID is generated automatically, birthDate must be over 18 years ago, idOfDepartment must match the existing department")
     public ResponseEntity<EmployeeDTO> addEmployee(@RequestBody EmployeeDTO employeeDTO) {
-        log.info("Add employee...");
-        log.debug("name: {}, birth date: {}", employeeDTO.getName(), employeeDTO.getBirthDate());
+        log.info("Add employee.");
+        log.debug("Name: {}, birth date: {}.", employeeDTO.getName(), employeeDTO.getBirthDate());
         return ResponseEntity.status(HttpStatus.CREATED).body(employeeService.addEmployee(employeeDTO));
     }
 
@@ -36,8 +36,8 @@ public class EmployeeController {
     @Operation(summary = "Edit employee", description = "Edit an existing employee, Request body with ID of employee required, " +
             "birthDate must be over 18 years ago, idOfDepartment must match the existing department")
     public ResponseEntity<EmployeeDTO> editEmployee(@RequestBody EmployeeDTO employeeDTO) {
-        log.info("Edit employee...");
-        log.debug("ID = {}", employeeDTO.getId());
+        log.info("Edit employee.");
+        log.debug("ID = {}.", employeeDTO.getId());
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(employeeService.editEmployee(employeeDTO));
     }
 
@@ -46,8 +46,8 @@ public class EmployeeController {
     public ResponseEntity<Void> deleteEmployee(@PathVariable("employeeId")
                                                @Parameter(description = "ID of the existing employee to remove")
                                                String id) {
-        log.info("Delete employee...");
-        log.debug("ID = {}", id);
+        log.info("Delete employee.");
+        log.debug("ID = {}.", id);
         employeeService.deleteEmployee(id);
         log.info("Employee with ID = {} deleted.", id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
@@ -58,8 +58,8 @@ public class EmployeeController {
     public ResponseEntity<EmployeeDTO> getEmployee(@PathVariable("employeeId")
                                                    @Parameter(description = "ID of the existing employee to get")
                                                    String id) {
-        log.info("Get employee...");
-        log.debug("ID = {}", id);
+        log.info("Get employee.");
+        log.debug("ID = {}.", id);
         return ResponseEntity.ok(employeeService.getEmployee(id));
     }
 
@@ -73,7 +73,7 @@ public class EmployeeController {
             @PathVariable("newDepartmentId")
             @Parameter(description = "New ID of department, 0-0-0-0-0 to set null")
             String departmentID) {
-        log.info("Change ID of department for employee...");
+        log.info("Change ID of department for employee.");
         log.debug("For employee with ID = {} set new ID of department: {}.", employeeID, departmentID);
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(employeeService.editDepartmentOfEmployee(employeeID, departmentID));
     }
@@ -81,7 +81,7 @@ public class EmployeeController {
     @GetMapping("/employees/all")
     @Operation(summary = "Get all employees", description = "Get list of all employees")
     public ResponseEntity<List<EmployeeDTO>> getListOfEmployees() {
-        log.info("Get list of all employees...");
+        log.info("Get list of all employees.");
         return ResponseEntity.ok(employeeService.getListOfEmployees());
     }
 }

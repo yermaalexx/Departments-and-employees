@@ -1,6 +1,6 @@
 package com.github.yermaalexx.departmentsandemployees.controllers.advices;
 
-import com.github.yermaalexx.departmentsandemployees.entities.ErrorDetails;
+import com.github.yermaalexx.departmentsandemployees.exceptions.ErrorDetails;
 import com.github.yermaalexx.departmentsandemployees.exceptions.NoDepartmentWithThisIDException;
 import com.github.yermaalexx.departmentsandemployees.exceptions.NoEmployeeWithThisIDException;
 import lombok.extern.slf4j.Slf4j;
@@ -25,7 +25,7 @@ public class ExceptionControllerAdvice {
     public ResponseEntity<ErrorDetails> noDepartmentWithThisIDHandler() {
         ErrorDetails errorDetails = new ErrorDetails();
         errorDetails.setMessage("No department with this ID.");
-        log.warn("Department with this ID does not exist");
+        log.warn("Department with this ID does not exist.");
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorDetails);
     }
 }
