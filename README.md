@@ -10,6 +10,9 @@ The app has two profiles:
 
 The app supports *Swagger OpenAPI Specification*.
 After launching the application the link is available http://localhost:8080/swagger-ui/index.html
+
+The app has docker-compose file to run application and PostgreSQL in two Docker containers.
+
 ***
 #### Employee entity
 - id - *automatically generated employee ID*, UUID, example: 1bf10eeb-7105-4102-9c50-00d9f880651e
