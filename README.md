@@ -5,7 +5,7 @@
 ### Run the application
 
 The app has two profiles:
-- h2: with database in memory, h2 console enabled, username: "name", password: "".
+- h2: with database in memory, h2 console enabled, username: "h2", password: "h2".
 - postgre-local: with local PostgreSQL database, url: "jdbc:postgresql://localhost:5432/employeesdepartments", username: "postgres", password: "postgres".
 
 The app supports *Swagger OpenAPI Specification*.
