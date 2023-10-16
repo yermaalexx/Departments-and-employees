@@ -1,4 +1,4 @@
-# Registration of Employees and Departments (v. 1.0.0)
+# Registration of Employees and Departments (v. 1.0.1)
 ***
 ### REST API application that allows you to add, edit, delete and get *employee and department* data
 ***
