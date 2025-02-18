@@ -1,19 +1,39 @@
-# Registration of Employees and Departments (v. 1.0.0)
+# Registration of Employees and Departments (v. 1.0.1)
 ***
 ### REST API application that allows you to add, edit, delete and get *employee and department* data
 ***
-### Run the application
+## Setup Instructions
+### Running Locally
+1. Clone the repository:
+   ```sh
+   git clone https://github.com/yermaalexx/Departments-and-employees.git
+   cd departments-and-employees
+   ```
+2. Configure environment variables in `.env` 
+3. Run the application:
+   ```sh
+   mvn spring-boot:run
+   ```
+4. Access the application at `http://localhost:8080`
 
-The app has two profiles:
-- h2: with database in memory, h2 console enabled, username: "h2", password: "h2".
-- postgre-local: with local PostgreSQL database, url: "jdbc:postgresql://localhost:5432/employeesdepartments", username: "postgres", password: "postgres".
+### Running with Docker
+1. Build and run using Docker Compose:
+   ```sh
+   docker-compose up --build
+   ```
+2. The application will be available at `http://localhost:8080`
 
-The app supports *Swagger OpenAPI Specification*.
-After launching the application the link is available http://localhost:8080/swagger-ui/index.html
+## CI/CD Pipeline
 
-The app has docker-compose file to run application and PostgreSQL in two Docker containers.
+A CI/CD pipeline using GitHub Actions is implemented for automated testing and Docker image creation. The pipeline triggers on pushes and pull requests to the `master` branch and includes two jobs:
+
+- **Build & Test**: Runs tests with Maven and caches dependencies.
+
+- **Docker Image Build & Push**: Creates a Docker image and pushes it to Docker Hub.
 
 ***
+
+### Entities:
 #### Employee entity
 - id - *automatically generated employee ID*, UUID, example: 1bf10eeb-7105-4102-9c50-00d9f880651e
 - name - *employee name*, string, example: Musk Ilon
